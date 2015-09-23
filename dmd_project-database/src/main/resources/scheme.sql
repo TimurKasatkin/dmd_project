@@ -1,9 +1,9 @@
 CREATE TABLE Articles (
-  id    SERIAL PRIMARY KEY,
-  title VARCHAR NOT NULL,
-  year  INT,
+  id       SERIAL PRIMARY KEY,
+  title    VARCHAR NOT NULL,
+  year     INT,
   publtype VARCHAR,
-  url   VARCHAR NOT NULL
+  url      VARCHAR NOT NULL
 );
 
 CREATE TABLE Authors (
@@ -22,11 +22,12 @@ CREATE TABLE Journals (
   name VARCHAR NOT NULL
 );
 
-CREATE TABLE  Article_Journal (
+CREATE TABLE Article_Journal (
   article_id INT REFERENCES Articles (id),
   journal_id INT REFERENCES Journals (id),
   volume     VARCHAR,
   number     VARCHAR,
+  pubtype    VARCHAR,
   CONSTRAINT article_journal_pk PRIMARY KEY (article_id, journal_id)
 );
 
