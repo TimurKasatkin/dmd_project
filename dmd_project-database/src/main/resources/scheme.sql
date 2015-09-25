@@ -27,7 +27,6 @@ CREATE TABLE Article_Journal (
   journal_id INT REFERENCES Journals (id),
   volume     VARCHAR,
   number     VARCHAR,
-  pubtype    VARCHAR,
   CONSTRAINT article_journal_pk PRIMARY KEY (article_id, journal_id)
 );
 
