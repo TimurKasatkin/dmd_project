@@ -1,15 +1,8 @@
-CREATE TABLE Articles (
-  id       SERIAL PRIMARY KEY,
-  title    VARCHAR NOT NULL,
-  year     INT,
-  publtype VARCHAR,
-  url      VARCHAR NOT NULL
-);
-
 CREATE TABLE Authors (
   id         SERIAL PRIMARY KEY,
   first_name VARCHAR NOT NULL,
-  last_name  VARCHAR NOT NULL
+  last_name  VARCHAR,
+  CONSTRAINT author_full_name_uniq UNIQUE (first_name, last_name)
 );
 
 CREATE TABLE Science_Areas (
@@ -19,16 +12,18 @@ CREATE TABLE Science_Areas (
 
 CREATE TABLE Journals (
   id   SERIAL PRIMARY KEY,
-  name VARCHAR NOT NULL
+  name VARCHAR UNIQUE NOT NULL
 );
 
-CREATE TABLE Article_Journal (
-  article_id INT REFERENCES Articles (id),
+CREATE TABLE Articles (
+  id       SERIAL PRIMARY KEY,
+  title    VARCHAR NOT NULL,
+  publtype VARCHAR,
+  url      VARCHAR NOT NULL,
   journal_id INT REFERENCES Journals (id),
+  year     INT,
   volume     VARCHAR,
-  number     VARCHAR,
-  pubtype    VARCHAR,
-  CONSTRAINT article_journal_pk PRIMARY KEY (article_id, journal_id)
+  number     VARCHAR
 );
 
 CREATE TABLE Article_Author (
@@ -41,4 +36,11 @@ CREATE TABLE Article_Area (
   article_id INT REFERENCES Articles (id),
   area_id    INT REFERENCES Science_Areas (id),
   CONSTRAINT article_area_pk PRIMARY KEY (article_id, area_id)
-)
+);
+
+CREATE TABLE Users (
+  id       SERIAL PRIMARY KEY,
+  "login"  VARCHAR(30) UNIQUE NOT NULL,
+  password VARCHAR            NOT NULL,
+  email    VARCHAR
+);
