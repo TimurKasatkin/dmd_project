@@ -74,7 +74,7 @@ public class Parser {
                     " AND year=" + article.getYear() + " AND url=" + article.getUrl() + ", SELECT id FROM Authors WHERE first_name=" + authorsS[0] +
                     "AND last_name=" + authorsS[authorsS.length - 1] + ")");
             statement.execute("INSERT INTO Article_Area (article_id, area_id) VALUES(SELECT id FROM Article WHERE title=" + article.getTitle() +
-                    " AND year=" + article.getYear() + " AND url=" + article.getUrl() +", SELECT id FROM Science_Areas WHERE name=" + article.getVenue() + ")")
+                    " AND year=" + article.getYear() + " AND url=" + article.getUrl() +", SELECT id FROM Science_Areas WHERE name=" + article.getVenue() + ")");
         }
 
 
