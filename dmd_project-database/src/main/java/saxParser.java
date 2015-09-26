@@ -1,3 +1,4 @@
+import models.Article;
 import models.Author;
 import models.Journal;
 import models.ScienceArea;
@@ -99,13 +100,13 @@ class SaxParser extends HandlerBase {
                         fw.write("INSERT INTO Authors (first_name, last_name) VALUES (" + authors[0] + ", " + authors[authors.length - 1] + ")\n");
                         fw.write("INSERT INTO Science_Areas (name) VALUES (" + article.getVenue() + ")\n");
                         fw.write("INSERT INTO Journals (name) VALUES (" + article.getJournal() + ")\n");
-                        fw.write("INSERT INTO Article_Journal (article_id, journal_id, volume, number, pubtype) VALUES (SELECT id FROM Article WHERE title=" + article.getTitle() +
+                        fw.write("INSERT INTO Article_Journal (article_id, journal_id, volume, number, pubtype) VALUES (SELECT id FROM models.Article WHERE title=" + article.getTitle() +
                                 " AND year=" + article.getYear() + " AND url=" + article.getUrl() +", SELECT id FROM Article_Journal WHERE name=" + article.getJournal() + ", " +
                                 article.getVolume() + ", " + article.getNumber() + ", " + article.getPubtype() + ")\n");
-                        fw.write("INSERT INTO Article_Author (article_id, author_id) VALUES (SELECT id FROM Article WHERE title=" + article.getTitle() +
+                        fw.write("INSERT INTO Article_Author (article_id, author_id) VALUES (SELECT id FROM models.Article WHERE title=" + article.getTitle() +
                                 " AND year=" + article.getYear() + " AND url=" + article.getUrl() + ", SELECT id FROM Authors WHERE first_name=" + authors[0] +
                                 "AND last_name=" + authors[authors.length - 1] + ")\n");
-                        fw.write("INSERT INTO Article_Area (article_id, area_id) VALUES(SELECT id FROM Article WHERE title=" + article.getTitle() +
+                        fw.write("INSERT INTO Article_Area (article_id, area_id) VALUES(SELECT id FROM models.Article WHERE title=" + article.getTitle() +
                                 " AND year=" + article.getYear() + " AND url=" + article.getUrl() +", SELECT id FROM Science_Areas WHERE name=" + article.getVenue() + ")\n");
                     } catch (IOException e) {
                         e.printStackTrace();
