@@ -1,3 +1,6 @@
+import models.Author;
+import models.Journal;
+import models.ScienceArea;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,20 +18,29 @@ import java.util.Set;
 /**
  * Created by Филипп on 25.09.2015.
  */
-class saxParser extends HandlerBase {
+class SaxParser extends HandlerBase {
         private String nameElement;
         private String url;
         private boolean wasError = false;
         private Article article = null;
         Set<Article> articles;
+        Set<Author> authors;
+        Set<Journal> journals;
+        Set<ScienceArea> scienceAreas;
+        Author author;
+        Journal journal;
+        ScienceArea scienceArea;
         String beginSearchURL = "http://dblp.uni-trier.de/search/publ/api?q=";
         String endSearchURL = "&h=1000&format=xml";
         FileWriter fw;
 
-        public saxParser(String url_str, Set<Article> articles) throws IOException {
+        public SaxParser(String url_str, Set<Article> articles, Set<Author> authors, Set<Journal> journals, Set <ScienceArea> scienceAreas) throws IOException {
             url = url_str;
             fw  = new FileWriter(new File("sql.nah1"));
             this.articles = articles;
+            this.authors = authors;
+            this.journals = journals;
+            this.scienceAreas = scienceAreas;
         }
 
         // =======================================================
@@ -51,6 +63,9 @@ class saxParser extends HandlerBase {
         public void startElement(String name, AttributeList attrs) {
             if (name.equals("article")) {
                 article = new Article();
+                author = new Author();
+                scienceArea = new ScienceArea();
+                journal = new Journal();
                 if (attrs.getValue("pubtype") != null) {
                     article.setPubtype(attrs.getValue("pubtype"));
                 }
@@ -73,10 +88,11 @@ class saxParser extends HandlerBase {
                         elements = doc.getElementsByTag("venue");
                         Element element = elements.get(0);
                         article.setVenue(element.text());
+                        scienceArea.setName(element.text());
                     }catch (Exception e){
                         wasError = true;
                     }
-                    try {
+                    /*try {
                         fw.write("INSERT INTO Articles (title, year, publtype, url) VALUES (" + article.getTitle() + ", " +
                                 article.getYear() + ", " + article.getPubtype() + ", " + article.getUrl() + ")\n");
                         String[ ] authors = article.getAuthor().split(" ");
@@ -93,10 +109,13 @@ class saxParser extends HandlerBase {
                                 " AND year=" + article.getYear() + " AND url=" + article.getUrl() +", SELECT id FROM Science_Areas WHERE name=" + article.getVenue() + ")\n");
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
+                    }*/
 
                     if(!wasError) {
                         articles.add(article);
+                        authors.add(author);
+                        journals.add(journal);
+                        scienceAreas.add(scienceArea);
                         System.out.println(article.getVenue());
                     }
                     wasError = false;
@@ -124,12 +143,14 @@ class saxParser extends HandlerBase {
                         break;
                     case "journal":
                         article.setJournal(field);
+                        journal.setName(field);
                         break;
                     case "number":
                         article.setNumber(Integer.parseInt(field));
                         break;
                     case "author":
                         article.setAuthor(field);
+                        author.parse(field);
                         break;
                     case "url":
                         article.setUrl(field);
