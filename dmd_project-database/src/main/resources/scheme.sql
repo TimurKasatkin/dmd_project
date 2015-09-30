@@ -2,10 +2,16 @@ CREATE TABLE Authors (
   id         SERIAL PRIMARY KEY,
   first_name VARCHAR NOT NULL,
   last_name  VARCHAR,
-  CONSTRAINT author_full_name_uniq UNIQUE (first_name, last_name)
+  CONSTRAINT author_full_name_uniq
+  UNIQUE (first_name, last_name)
 );
 
-CREATE TABLE Science_Areas (
+CREATE TABLE Keywords (
+  id   SERIAL PRIMARY KEY,
+  word VARCHAR UNIQUE NOT NULL
+);
+
+CREATE TABLE Conferences (
   id   SERIAL PRIMARY KEY,
   name VARCHAR UNIQUE NOT NULL
 );
@@ -18,24 +24,43 @@ CREATE TABLE Journals (
 CREATE TABLE Articles (
   id       SERIAL PRIMARY KEY,
   title    VARCHAR NOT NULL,
-  publtype VARCHAR,
+  publtype VARCHAR NOT NULL,
   url      VARCHAR NOT NULL,
-  journal_id INT REFERENCES Journals (id),
-  year     INT,
+  year     INT
+);
+
+CREATE TABLE Article_Conference (
+  article_id    INT PRIMARY KEY
+    REFERENCES Articles (id)
+    ON DELETE CASCADE,
+  conference_id INT REFERENCES Conferences (id)
+);
+
+CREATE TABLE Article_Journal (
+  article_id INT PRIMARY KEY
+    REFERENCES Articles (id)
+    ON DELETE CASCADE,
+  journal_id INT NOT NULL REFERENCES Journals (id),
   volume     VARCHAR,
   number     VARCHAR
 );
 
 CREATE TABLE Article_Author (
-  article_id INT REFERENCES Articles (id),
+  article_id INT
+    REFERENCES Articles (id)
+    ON DELETE CASCADE,
   author_id  INT REFERENCES Authors (id),
-  CONSTRAINT article_author_pk PRIMARY KEY (article_id, author_id)
+  CONSTRAINT article_author_pk
+  PRIMARY KEY (article_id, author_id)
 );
 
-CREATE TABLE Article_Area (
-  article_id INT REFERENCES Articles (id),
-  area_id    INT REFERENCES Science_Areas (id),
-  CONSTRAINT article_area_pk PRIMARY KEY (article_id, area_id)
+CREATE TABLE Article_Keyword (
+  article_id INT
+    REFERENCES Articles (id)
+    ON DELETE CASCADE,
+  keyword_id INT REFERENCES Keywords (id),
+  CONSTRAINT article_keyword_pk
+  PRIMARY KEY (article_id, keyword_id)
 );
 
 CREATE TABLE Users (
