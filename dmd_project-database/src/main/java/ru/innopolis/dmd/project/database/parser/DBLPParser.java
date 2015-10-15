@@ -1,4 +1,4 @@
-package ru.innopolis.dmd.semstertask.parser;
+package ru.innopolis.dmd.project.database.parser;
 
 import javafx.util.Pair;
 
