@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by timur on 15.10.15.
  */
-public class Author extends LongIdEntity {
+public class    Author extends LongIdEntity {
 
     private String firstName;
 
