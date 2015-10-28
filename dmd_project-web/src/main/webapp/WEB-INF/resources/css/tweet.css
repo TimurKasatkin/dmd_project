@@ -1,0 +1,17 @@
+.tweet-text p[contenteditable=true] {
+    color: rgb(0, 0, 0);
+    background: rgba(70, 42, 33, 0.08);
+}
+
+.tweet .tweet-text p {
+    min-height: 50px;
+}
+
+.entry {
+    min-height: 225px;
+    padding: 0;
+}
+
+.retweet .entry-title label {
+    margin-bottom: 0;
+}

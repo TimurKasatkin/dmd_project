@@ -1,21 +1,29 @@
 package ru.innopolis.dmd.project.model;
 
-import ru.innopolis.dmd.project.model.article.JournalArticle;
+import ru.innopolis.dmd.project.model.article.JournalArt;
 
 import java.io.Serializable;
 
 /**
  * Created by timur on 15.10.15.
  */
-public class ArticleJournal implements Serializable {
+public class ArticleJournal implements IdentifiedEntity {
 
-    private JournalArticle article;
+    private JournalArt article;
 
     private Journal journal;
 
     private String volume;
 
     private String number;
+
+    public ArticleJournal(JournalArt article, Journal journal,
+                          String volume, String number) {
+        this.article = article;
+        this.journal = journal;
+        this.volume = volume;
+        this.number = number;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -32,11 +40,11 @@ public class ArticleJournal implements Serializable {
         return result;
     }
 
-    public JournalArticle getArticle() {
+    public JournalArt getArticle() {
         return article;
     }
 
-    public void setArticle(JournalArticle article) {
+    public void setArticle(JournalArt article) {
         this.article = article;
     }
 
@@ -62,5 +70,11 @@ public class ArticleJournal implements Serializable {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    @Override
+    //TODO realize
+    public Serializable getId() {
+        return null;
     }
 }

@@ -1,0 +1,9 @@
+#content {
+    background-image: url('../images/background.jpg');
+    background-position: center center;
+    /*background-size: 100% 100%;*/
+}
+
+#top-bar {
+    background-color: rgba(221, 221, 219, 0.30);
+}

@@ -7,11 +7,20 @@ import java.util.List;
 /**
  * Created by timur on 15.10.15.
  */
-public class Keyword {
+public class Keyword extends LongIdEntity {
 
     private String word;
 
     private List<Article> articles;
+
+    public Keyword(String word) {
+        this(null, word);
+    }
+
+    public Keyword(Long id, String word) {
+        super(id);
+        this.word = word;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,5 +1,7 @@
 package ru.innopolis.dmd.project.model.enums;
 
+import java.util.stream.Stream;
+
 /**
  * Created by timur on 15.10.15.
  */
@@ -11,6 +13,12 @@ public enum ArticleType {
 
     ArticleType(String name) {
         this.name = name;
+    }
+
+    public static ArticleType byName(String name) {
+        return Stream.of(values())
+                .filter(artT -> artT.name.equals(name))
+                .findFirst().orElse(null);
     }
 
     public String getName() {

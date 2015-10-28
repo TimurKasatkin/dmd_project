@@ -1,5 +1,7 @@
 package ru.innopolis.dmd.project.model;
 
+import ru.innopolis.dmd.project.model.enums.UserRole;
+
 /**
  * Created by timur on 15.10.15.
  */
@@ -10,6 +12,23 @@ public class User extends LongIdEntity {
     private String password;
 
     private String email;
+
+    private UserRole role;
+
+    public User() {
+    }
+
+    public User(String login, String password, String email, UserRole role) {
+        this(null, login, password, email, role);
+    }
+
+    public User(Long id, String login, String password, String email, UserRole role) {
+        super(id);
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.role = role == null ?/*give default role*/null : role;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -49,5 +68,13 @@ public class User extends LongIdEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }
