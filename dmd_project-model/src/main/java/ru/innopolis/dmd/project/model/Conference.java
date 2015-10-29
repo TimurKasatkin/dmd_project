@@ -7,6 +7,14 @@ public class Conference extends LongIdEntity {
 
     private String name;
 
+    public Conference(String name) {
+        this(null, name);
+    }
+
+    public Conference(Long id, String name) {
+        super(id);
+        this.name = name;
+    }
 
     public String getName() {
         return name;

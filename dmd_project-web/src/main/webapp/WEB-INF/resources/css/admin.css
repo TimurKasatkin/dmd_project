@@ -1,0 +1,695 @@
+body {
+    background: #ededf3;
+}
+
+header {
+    min-width: 1262px;
+    max-width: 1530px;
+    margin: 0 auto;
+}
+
+.page-header {
+    height: 66px;
+    min-width: 1090px;
+    background: #4D4C5C;
+}
+
+.page-header > .logo {
+    float: left;
+    height: 66px;
+}
+
+.page-header > .user {
+    display: table;
+    float: right;
+    width: 324px;
+    height: 66px;
+    color: rgba(255, 255, 255, 0.3);
+    background: #484750;
+    background: linear-gradient(to right, #484750 0%, #383742 100%);
+    font-size: 16px;
+}
+
+.page-header > .user > .name {
+    display: table-cell;
+    width: 188px;
+    height: 66px;
+    padding: 0 0 0 18px;
+    vertical-align: middle;
+}
+
+.page-header > .user > .name > a {
+    display: block;
+    overflow: hidden;
+    width: 162px;
+    max-height: 54px;
+    text-overflow: ellipsis;
+    line-height: 18px;
+    color: rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    font-family: "HelveticaNeueCyr-Light", Arial, sans-serif;
+
+}
+
+.page-header > .user > .name > a:hover {
+    text-decoration: underline;
+}
+
+.page-header > .user > .login {
+    display: table-cell;
+    width: 136px;
+    height: 66px;
+    padding: 0 18px 0 0;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.page-header > .user > .login > span {
+    display: block;
+    overflow: hidden;
+    width: 117px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-style: italic;
+}
+
+.page-header > .user > .login > .username {
+    font-family: "HelveticaNeueCyr-Roman", Arial, sans-serif;
+}
+
+.page-header > .user > .login > .logout {
+    font-family: "HelveticaNeueCyr-Thin", Arial, sans-serif;
+}
+
+.page-header > .user > .login > .logout > a {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.page-header > .user > .login > .logout > a:hover {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/*My Styles*/
+
+.clr {
+    clear: both;
+}
+
+main {
+    min-width: 1262px;
+    max-width: 1530px;
+    margin: 0 auto;
+}
+
+.cont {
+    margin-top: 15px;
+}
+
+.left_side {
+    width: 68%;
+    float: left;
+}
+
+.man {
+    width: 100%;
+    height: 180px;
+    background: #fffff7;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.man > img {
+    float: left;
+    width: 193px;
+    height: 193px;
+}
+
+.info {
+    float: left;
+    width: 77.5%;
+    box-sizing: border-box;
+    padding: 15px 20px 0 20px;
+}
+
+.head_info {
+    overflow: hidden;
+}
+
+.head_info > p {
+    float: left;
+    font: 24px "HelveticaNeueCyr-Light";
+    color: #000;
+}
+
+.head_info > span {
+    float: right;
+    font: 18px "HelveticaNeueCyr-Thin";
+    color: #000;
+    padding-top: 6px;
+}
+
+.my_hr {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.bottom_info {
+    overflow: hidden;
+}
+
+.left_inf {
+    float: left;
+}
+
+.left_inf > p {
+    font: bold 18px "HelveticaNeueCyr-Thin";
+    color: #000;
+    padding-bottom: 10px;
+}
+
+.button-group {
+    float: right;
+    margin-top: 10px;
+}
+
+.button-group > button {
+    display: block;
+    float: none;
+}
+
+.acc_rej {
+    float: right;
+    width: 177px;
+    height: 27px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font: 18px "HelveticaNeueCyr-Light";
+    cursor: pointer;
+    background: #fff;
+    margin: 1px 0 9px 0;
+}
+
+.right_side {
+    float: right;
+    width: 30%;
+}
+
+.upload {
+    background: #f7f7f0;
+    padding: 20px;
+
+}
+
+.upload > p {
+    font: 20px HelveticaNeueCyr;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+.upload > span {
+    display: block;
+    font: 14px HelveticaNeueCyr;
+    color: #999;
+}
+
+.primer {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #deded8;
+    height: 156px;
+    margin: 11px 0 20px 0;
+}
+
+.buttons {
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.my_file {
+    height: 27px;
+    width: 148px;
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    float: left;
+
+}
+
+.my_file > input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 27px;
+    width: 148px;
+    opacity: 0;
+
+}
+
+.my_file > p {
+    padding-top: 3px;
+    text-align: center;
+    font: 18px HelveticaNeueCyr;
+    color: #000;
+}
+
+#other {
+    width: 110px;
+}
+
+.download {
+    margin-top: 15px;
+    background: #f7f7f0;
+    padding: 20px;
+}
+
+.download > p {
+    text-align: center;
+    font: 20px "HelveticaNeueCyr";
+    color: #000;
+    margin-bottom: 15px;
+}
+
+.download_but {
+    width: 93px;
+    height: 29px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font: 18px HelveticaNeueCyr;
+    cursor: pointer;
+    background: #fff;
+    display: block;
+    margin: 0 auto;
+}
+
+/*TABS*/
+
+#tabs {
+
+    width: 100%;
+    height: 45px;
+    margin-top: 50px;
+
+}
+
+.items {
+    overflow: hidden;
+    height: 100%;
+}
+
+.items > li {
+    float: left;
+    width: 50%;
+    text-align: center;
+    background: #fff;
+    height: 100%;
+}
+
+.items > li > a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    font: 25px "HelveticaNeueCyr-Light";
+    text-decoration: none;
+    color: #000;
+    padding-top: 8px;
+
+}
+
+li[class="active"] {
+    background: #f7f7f9;
+}
+
+#registr {
+    overflow: hidden;
+}
+
+/*TABS END*/
+
+/*Социальные роли*/
+#social {
+    overflow: hidden;
+}
+
+.soc-left {
+    float: left;
+    width: 50%;
+}
+
+.soc-right {
+    float: left;
+    width: 50%;
+}
+
+.soc-left > a {
+    background: url(../images/admin/add.png) left center no-repeat;
+    padding-left: 40px;
+    display: table;
+    font: italic 20px "HelveticaNeueCyr-Thin";
+    text-decoration: none;
+    color: #4d4c5c;
+    margin-left: 60px;
+
+}
+
+.soc-left > a:hover {
+    text-decoration: underline;
+}
+
+.roles {
+    margin-top: 30px;
+}
+
+.role-line {
+    overflow: hidden;
+    margin-bottom: 20px;
+
+}
+
+.role-line > p {
+    float: left;
+    margin: 7px 0 0 40px;
+    text-transform: lowercase;
+    font: 15px "HelveticaNeueCyr-Light";
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.role-right {
+    float: right;
+    width: 81%;
+    height: 30px;
+    position: relative;
+}
+
+.role-right > p {
+    background: #ededf3;
+    font: 24px "HelveticaNeueCyr-Light";
+    padding-right: 5px;
+    position: absolute;
+    left: 0;
+    z-index: 5;
+}
+
+.line {
+    position: absolute;
+    width: 100%;
+    border: 1px dashed #bebec2;
+    z-index: 4;
+    top: 15px;
+}
+
+.icons {
+    position: absolute;
+    right: 0;
+    z-index: 5;
+    overflow: hidden;
+    padding: 0 40px 0 10px;
+    background: #ededf3;
+}
+
+.icons > img {
+    cursor: pointer;
+    display: block;
+    float: left;
+}
+
+.icons > img:first-child {
+    margin: 5px 7px 0 0;
+}
+
+.icons > img:nth-child(2) {
+    margin: 3px 7px 0 0;
+}
+
+.icons > img:last-child {
+    margin-top: 7px;
+}
+
+/*LOGO*/
+
+.logo {
+    margin: 19px 0 0 25px;
+    float: left;
+}
+
+.admin-main {
+    overflow: hidden;
+    float: right;
+    margin: 10px 10px 0 0;
+}
+
+.admin {
+    background: #fff;
+    font: 18px "HelveticaNeueCyr-Light";
+    height: 25px;
+    width: 195px;
+    text-decoration: none;
+    color: #000;
+    display: block;
+    padding-top: 3px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.admin-main > p {
+    text-align: right;
+    color: rgba(255, 255, 255, 0.3);
+    font: 14px "HelveticaNeueCyr-Light";
+    margin-top: 5px;
+}
+
+.soc-right > div:first-child {
+    margin-top: 52px;
+}
+
+.input-edit {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 25px;
+    box-sizing: border-box;
+    padding: 0 5px;
+    font: 22px "HelveticaNeueCyr-Light";
+    margin-top: 4px;
+}
+
+/*POPUP Игоря*/
+
+.popup > .background {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #404040;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 120;
+}
+
+.popup > .window {
+    position: absolute;
+    top: 214px;
+    left: 50%;
+    font-size: 16px;
+    color: #FFF;
+    z-index: 121;
+}
+
+.popup > .window .heading {
+    height: 83px;
+    background: #383742;
+    background: rgba(56, 55, 66, 0.8);
+}
+
+.popup > .window .heading > h3 {
+    font-size: 24px;
+    height: 27px;
+    padding: 28px 0;
+    text-align: center;
+    font-family: "HelveticaNeueCyr-Thin", Arial, sans-serif;
+}
+
+.popup > .window .center {
+    background: #4d4c5c;
+    background: rgba(77, 76, 92, 0.8);
+    padding: 26px 40px;
+    line-height: 22px;
+}
+
+.popup > .window .bottom {
+    height: 83px;
+    background: #383742;
+    background: rgba(56, 55, 66, 0.8);
+    padding: 24px 0 25px 0;
+}
+
+.popup > .window button {
+    background: #777;
+    background: rgba(255, 255, 255, 0.25);
+    color: #FFF;
+    border: none;
+    display: block;
+    margin: 0 auto;
+}
+
+.popup > .window button:focus {
+    background: #888;
+    background: rgba(255, 255, 255, 0.38);
+}
+
+.popup > .window button:active {
+    transform: scale(0.95);
+}
+
+.popup > .window.password,
+.popup > .window.photo-upload, .popup > .window.soc-new {
+    width: 480px;
+    margin-left: -240px;
+}
+
+.popup > .window.password .center label {
+    display: block;
+    width: 400px;
+    margin: 0 auto 25px auto;
+    height: 23px;
+}
+
+.popup > .window.password .center label:last-of-type {
+    margin-bottom: 0;
+}
+
+.popup > .window.password .center label > span {
+    display: block;
+    float: left;
+    width: 170px;
+    font-size: 18px;
+    padding: 1px 0 2px 0;
+    font-family: "HelveticaNeueCyr-Thin", Arial, sans-serif;
+}
+
+.popup > .window.password .center label > input {
+    display: block;
+    float: left;
+    width: 230px;
+    height: 23px;
+    border: none;
+    font-size: 18px;
+    padding: 0 4px;
+}
+
+.popup > .window.password .bottom button {
+    width: 240px;
+    height: 34px;
+    font-size: 18px;
+}
+
+.popup > .window.photo-upload .center input {
+    display: none;
+}
+
+.popup > .window.photo-upload .center button {
+    width: 186px;
+    height: 27px;
+    font-size: 16px;
+    margin: 23px auto 20px auto;
+}
+
+.popup > .window.photo-thumbnail {
+    width: 698px;
+    margin-left: -349px;
+}
+
+.popup > .window.photo-thumbnail .center .thumb-selection {
+    width: 240px;
+    height: 240px;
+    background: #000;
+    margin: 20px auto 0 auto;
+}
+
+.popup > .window.photo-thumbnail .bottom button {
+    height: 34px;
+    font-size: 18px;
+}
+
+.popup > .window.photo-thumbnail .bottom .wrapper {
+    display: table;
+    margin: 0 auto;
+}
+
+.popup > .window.photo-thumbnail .bottom .wrapper > div {
+    display: table-cell;
+}
+
+.popup > .window.photo-thumbnail .bottom .wrapper > div.left-button > button {
+    width: 267px;
+}
+
+.popup > .window.photo-thumbnail .bottom .wrapper > div.right-button > button {
+    width: auto;
+    padding: 0 5px;
+    margin-left: 20px;
+    background: transparent;
+}
+
+.popup > .window.photo-thumbnail .bottom .wrapper > div.right-button > button:focus {
+    background: #333;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.popup > .soc-new .bottom {
+    height: 30px;
+}
+
+.soc-new .center > p, .soc-new .center > span {
+    font: 18px "HelveticaNeueCyr-Thin";
+}
+
+.soc-new .center > p {
+    float: left;
+    margin-right: 40px;
+}
+
+.soc-new .center > p:first-child {
+    margin-bottom: 30px;
+}
+
+.soc-new .center > form {
+    margin-top: 30px;
+}
+
+.name-soc {
+    background: #e6e6e6;
+    border: none;
+    margin-left: 4px;
+    width: 265px;
+    height: 15px;
+    padding: 5px;
+    font: 16px "HelveticaNeueCyr-Light";
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: -4px;
+}
+
+.soc-new .center .names {
+    margin: 20px 0 0 120px;
+}
+
+.soc-new .center .names > p {
+    background: #f5f5fa;
+    padding: 5px;
+    font: 16px "HelveticaNeueCyr-Light";
+    color: #000;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.soc-new .center .names > p > a > img {
+    vertical-align: middle;
+    margin: -2px 5px 0 5px;
+}
+
+.soc-new .bottom > button {
+    background: #85848c;
+    padding: 5px 15px;
+    color: #e5e3e3;
+    font: 18px "HelveticaNeueCyr-Light";
+}
+
+/*POPUP Игоря*/
+

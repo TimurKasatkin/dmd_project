@@ -23,9 +23,9 @@ CREATE TABLE Journals (
 
 CREATE TABLE Articles (
   id       SERIAL PRIMARY KEY,
-  title    VARCHAR NOT NULL,
-  publtype VARCHAR NOT NULL,
-  url      VARCHAR NOT NULL,
+  title    VARCHAR UNIQUE NOT NULL,
+  publtype VARCHAR        NOT NULL,
+  url      VARCHAR        NOT NULL,
   year     INT
 );
 
@@ -67,5 +67,6 @@ CREATE TABLE Users (
   id       SERIAL PRIMARY KEY,
   "login"  VARCHAR(30) UNIQUE NOT NULL,
   password VARCHAR            NOT NULL,
-  email    VARCHAR
+  email VARCHAR,
+  role  VARCHAR NOT NULL
 );

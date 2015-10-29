@@ -1,11 +1,9 @@
 package ru.innopolis.dmd.project.model;
 
-import java.io.Serializable;
-
 /**
  * Created by timur on 15.10.15.
  */
-public abstract class LongIdEntity implements Serializable {
+public abstract class LongIdEntity implements IdentifiedEntity {
 
     protected Long id;
 
@@ -16,6 +14,7 @@ public abstract class LongIdEntity implements Serializable {
         this.id = id;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

@@ -19,10 +19,20 @@ public abstract class Article extends LongIdEntity {
     private String url;
 
     private Integer year;
-
     private List<Author> authors;
-
     private List<Keyword> keywords;
+
+    public Article() {
+    }
+
+    public Article(Long id, String title, ArticleType publtype,
+                   String url, Integer year) {
+        super(id);
+        this.title = title;
+        this.publtype = publtype;
+        this.url = url;
+        this.year = year;
+    }
 
     @Override
     public boolean equals(Object o) {

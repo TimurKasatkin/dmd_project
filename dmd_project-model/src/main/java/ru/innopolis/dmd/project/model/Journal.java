@@ -11,6 +11,15 @@ public class Journal extends LongIdEntity {
 
     private List<ArticleJournal> articleJournals;
 
+    public Journal(String name) {
+        this(null, name);
+    }
+
+    public Journal(Long id, String name) {
+        super(id);
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

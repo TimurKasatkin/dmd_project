@@ -15,6 +15,19 @@ public class Author extends LongIdEntity {
 
     private List<Article> articles;
 
+    public Author() {
+    }
+
+    public Author(String firstName, String lastName) {
+        this(null, firstName, lastName);
+    }
+
+    public Author(Long id, String firstName, String lastName) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }
