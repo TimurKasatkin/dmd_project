@@ -1,68 +1,86 @@
-<#include "template.ftl">
+<#include "template/template.ftl">
 <#macro body>
-<section id="content">
+<div class="tabs divcenter nobottommargin clearfix" id="tab-login-register" style="max-width: 500px;">
 
-    <div class="content-wrap">
+    <ul class="tab-nav tab-nav2 center clearfix">
+        <li class="inline-block"><a href="#tab-login">Login</a></li>
+        <li class="inline-block"><a href="#tab-register">Register</a></li>
+    </ul>
 
-        <div class="container clearfix">
+    <div class="tab-container">
 
-            <div class="tabs divcenter nobottommargin clearfix" id="tab-login-register" style="max-width: 500px;">
+        <div class="tab-content clearfix" id="tab-login">
+            <div class="panel panel-default nobottommargin">
+                <div class="panel-body" style="padding: 40px;">
+                    <form id="login-form" name="login-form" class="nobottommargin" action="/login" method="post">
 
-                <ul class="tab-nav tab-nav2 center clearfix">
-                    <li class="inline-block"><a href="#tab-login">Login</a></li>
-                    <li class="inline-block"><a href="#tab-register">Register</a></li>
-                </ul>
+                        <h3>Login to your Account</h3>
 
-                <div class="tab-container">
-
-                    <div class="tab-content clearfix" id="tab-login">
-                        <div class="panel panel-default nobottommargin">
-                            <div class="panel-body" style="padding: 40px;">
-                                <form id="login-form" name="login-form" class="nobottommargin" action="#" method="post">
-
-                                    <h3>Login to your Account</h3>
-
-                                    <div class="col_full">
-                                        <label for="login-form-username">Username:</label>
-                                        <input type="text" id="login-form-username" name="login-form-username" value=""
-                                               class="form-control"/>
-                                    </div>
-
-                                    <div class="col_full">
-                                        <label for="login-form-password">Password:</label>
-                                        <input type="password" id="login-form-password" name="login-form-password"
-                                               value="" class="form-control"/>
-                                    </div>
-
-                                    <div class="col_full nobottommargin">
-                                        <button class="button button-3d button-black nomargin" id="login-form-submit"
-                                                name="login-form-submit" value="login">Login
-                                        </button>
-                                    </div>
-
-                                </form>
-                            </div>
+                        <div class="col_full">
+                            <label for="login-form-username">Username:</label>
+                            <input type="text" id="login-form-username" name="username" class="form-control"/>
                         </div>
-                    </div>
 
-                    <div class="tab-content clearfix" id="tab-register">
-                        <div class="panel panel-default nobottommargin">
-                            <div class="panel-body" style="padding: 40px;">
-                                <h3>Register for an Account</h3>
-
-                                <#include "registrationFormInclude.ftl">
-                            </div>
+                        <div class="col_full">
+                            <label for="login-form-password">Password:</label>
+                            <input type="password" id="login-form-password" name="password" class="form-control"/>
                         </div>
-                    </div>
 
+                        <div class="col_full nobottommargin">
+                            <button class="button button-3d button-black nomargin" id="login-form-submit"
+                                    name="login-form-submit" value="login">Login
+                            </button>
+                        </div>
+
+                    </form>
                 </div>
-
             </div>
+        </div>
 
+        <div class="tab-content clearfix" id="tab-register">
+            <div class="panel panel-default nobottommargin">
+                <div class="panel-body" style="padding: 40px;">
+                    <h3>Register for an Account</h3>
+
+                    <@form.form id="register-form" name="register-form"
+                    cssClass="nobottommargin" modelAttribute="user" action="/register" method="post">
+                        <div class="col_full">
+                            <label for="register-form-email">Email Address:</label>
+                            <@form.input id="register-form-email" path='email' cssClass="form-control"/>
+                            <@form.errors path="email"/>
+                        </div>
+                        <div class="col_full">
+                            <label for="register-form-username">Choose a Username:</label>
+                            <input type="text" id="register-form-username" name="register-form-username" value=""
+                                   class="form-control"/>
+                        </div>
+
+                        <div class="col_full">
+                            <label for="register-form-password">Choose Password:</label>
+                            <input type="password" id="register-form-password" name="register-form-password" value=""
+                                   class="form-control"/>
+                        </div>
+
+                        <div class="col_full">
+                            <label for="register-form-repassword">Re-enter Password:</label>
+                            <input type="password" id="register-form-repassword" name="register-form-repassword"
+                                   value=""
+                                   class="form-control"/>
+                        </div>
+
+                        <div class="col_full nobottommargin">
+                            <button class="button button-3d button-black nomargin" id="register-form-submit"
+                                    name="register-form-submit"
+                                    value="register">Register Now
+                            </button>
+                        </div>
+                    </@form.form>
+                </div>
+            </div>
         </div>
 
     </div>
 
-</section><!-- #content end -->
+</div>
 </#macro>
 <@main/>

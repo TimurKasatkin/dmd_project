@@ -38,8 +38,21 @@
     <#include "header.ftl">
     <!-- Content
     ============================================= -->
-    <@body/>
+    <section id="content">
+
+        <div class="content-wrap">
+
+            <div class="container clearfix">
+                <@body/>
+            </div>
+
+        </div>
+
+    </section>
     <!-- #content end -->
+
+    <#include "footer.ftl">
+
 </div>
 <!-- #wrapper end -->
 
