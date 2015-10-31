@@ -17,6 +17,14 @@ public class ArticleJournal implements IdentifiedEntity {
 
     private String number;
 
+    public ArticleJournal() {
+    }
+
+    public ArticleJournal(String volume, String number) {
+        this.volume = volume;
+        this.number = number;
+    }
+
     public ArticleJournal(JournalArt article, Journal journal,
                           String volume, String number) {
         this.article = article;

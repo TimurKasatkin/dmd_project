@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>${title}</title>
-    <link href="/resources/images/logo.png" rel="icon">
+    <link href="/resources/images/logo1.png" rel="icon">
 <#--<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic"-->
 <#--rel="stylesheet" type="text/css"/>-->
     <link href="/resources/css/canvas/bootstrap.css" rel="stylesheet">
@@ -27,6 +27,8 @@
     <![endif]-->
     <script src="/resources/js/canvas/jquery.js"></script>
     <script src="/resources/js/canvas/plugins.js"></script>
+
+    <script src="/resources/js/header.js"></script>
     <#list customScripts as script>
         <script src="${script}"></script>
     </#list>
@@ -39,15 +41,7 @@
     <!-- Content
     ============================================= -->
     <section id="content">
-
-        <div class="content-wrap">
-
-            <div class="container clearfix">
-                <@body/>
-            </div>
-
-        </div>
-
+        <@body/>
     </section>
     <!-- #content end -->
 

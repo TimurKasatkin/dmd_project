@@ -1,11 +1,20 @@
 package ru.innopolis.dmd.project.model;
 
+import ru.innopolis.dmd.project.model.article.ConferenceArt;
+
+import java.util.List;
+
 /**
  * Created by timur on 15.10.15.
  */
 public class Conference extends LongIdEntity {
 
     private String name;
+
+    private List<ConferenceArt> articles;
+
+    public Conference() {
+    }
 
     public Conference(String name) {
         this(null, name);
@@ -39,5 +48,13 @@ public class Conference extends LongIdEntity {
         int result = super.hashCode();
         result = 31 * result + name.hashCode();
         return result;
+    }
+
+    public List<ConferenceArt> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<ConferenceArt> articles) {
+        this.articles = articles;
     }
 }

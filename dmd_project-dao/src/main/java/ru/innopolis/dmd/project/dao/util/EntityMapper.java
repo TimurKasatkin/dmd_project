@@ -38,6 +38,16 @@ public class EntityMapper {
         return (JournalArt) extractArticle(rs);
     }
 
+    private static ArticleJournal extractArticleJournal(ResultSet rs) {
+        try {
+            return new ArticleJournal(extractIfContains(String.class, "articlejournal_volume", rs),
+                    extractIfContains(String.class, "articlejournal_number", rs));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private static Article extractArticle(ResultSet rs) {
         try {
             if (contains(rs, "article_publtype")) {

@@ -22,7 +22,7 @@ public class SQLUtils {
     }
 
     public static String fieldsByTable(String entityName, String tableName, String... fields) {
-        return fieldsStr(entityName, DEFAULT_TABLE_ALIAS.get(tableName), fields);
+        return fieldsStr(entityName, alias(tableName), fields);
     }
 
     public static String fieldsStr(Class<? extends IdentifiedEntity> entityClass) {
@@ -30,8 +30,12 @@ public class SQLUtils {
         return fieldsByTable(entityClass.getSimpleName().toLowerCase(), tableName, TABLE_FIELDS.get(tableName));
     }
 
+    public static String tableName(Class<? extends IdentifiedEntity> entityClass) {
+        return ENTITY_TABLE_NAME.get(entityClass);
+    }
+
     public static String alias(Class<? extends IdentifiedEntity> entityClass) {
-        return alias(ENTITY_TABLE_NAME.get(entityClass));
+        return alias(tableName(entityClass));
     }
 
     public static String alias(String tableName) {

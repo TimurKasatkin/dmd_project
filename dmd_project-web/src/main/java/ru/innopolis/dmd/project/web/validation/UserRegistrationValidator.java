@@ -29,17 +29,18 @@ public class UserRegistrationValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        if (user.getLogin().trim().length() == 0)
+        String login = user.getLogin();
+        if (login == null || login.trim().length() == 0)
             errors.rejectValue("login", "login.empty");
-        else if (!loginPredicate.test(user.getLogin().trim()))
+        else if (!loginPredicate.test(login.trim()))
             errors.rejectValue("login", "login.invalid");
-        String email = user.getEmail().trim();
-        if (email.equals(""))
+        String email = user.getEmail();
+        if (email == null || email.trim().equals(""))
             errors.rejectValue("email", "email.empty");
         else if (!emailPredicate.test(email))
             errors.rejectValue("email", "email.invalid");
-        String password = user.getPassword().trim();
-        if (password.equals(""))
+        String password = user.getPassword();
+        if (password == null || password.trim().equals(""))
             errors.rejectValue("password", "password.empty");
         else if (!passwordPredicate.test(password))
             errors.rejectValue("password", "password.invalid");

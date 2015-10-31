@@ -16,6 +16,7 @@ public class User extends LongIdEntity {
     private UserRole role;
 
     public User() {
+        role = UserRole.USER;
     }
 
     public User(String login, String password, String email, UserRole role) {

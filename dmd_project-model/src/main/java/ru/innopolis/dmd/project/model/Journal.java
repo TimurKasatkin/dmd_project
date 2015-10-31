@@ -11,6 +11,9 @@ public class Journal extends LongIdEntity {
 
     private List<ArticleJournal> articleJournals;
 
+    public Journal() {
+    }
+
     public Journal(String name) {
         this(null, name);
     }

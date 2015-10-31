@@ -1,6 +1,7 @@
 package ru.innopolis.dmd.project.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,10 +22,14 @@ import ru.innopolis.dmd.project.web.validation.UserRegistrationValidator;
  * @email aronwest001@gmail.com
  */
 @Controller
-public class UserController {
+public class UsersController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PasswordEncoder encoder;
+
+//  "password" == "$2a$10$a8.KLt0hE4rwxBsV0L.z0.65qebt7uzPcnY9hTr11QyOybs8oSS6C"
 
     @InitBinder
     private void initBinder(WebDataBinder binder) {
@@ -36,6 +41,7 @@ public class UserController {
         if (AuthenticationUtil.isAuthenticated())
             return "redirect:/";
         modelMap.addAttribute("user", new User());
+        if (error != null) modelMap.addAttribute("error", "Incorrect login or password");
         return "login";
     }
 
@@ -45,6 +51,7 @@ public class UserController {
             result.rejectValue("login", "login.exist");
         if (result.hasErrors())
             return "login";
+        user.setPassword(encoder.encode(user.getPassword()));
         userService.save(user);
         return "redirect:/";
     }

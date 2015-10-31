@@ -13,6 +13,9 @@ public class Keyword extends LongIdEntity {
 
     private List<Article> articles;
 
+    public Keyword() {
+    }
+
     public Keyword(String word) {
         this(null, word);
     }

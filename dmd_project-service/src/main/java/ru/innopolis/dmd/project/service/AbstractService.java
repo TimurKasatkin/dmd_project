@@ -22,6 +22,8 @@ public interface AbstractService<E extends IdentifiedEntity, I extends Serializa
 
     List<E> findLike(String field, Object value, Integer offset, Integer limit);
 
+    List<E> findBySomeFieldLike(String value);
+
     I save(E entity);
 
     E findById(I id);

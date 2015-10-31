@@ -14,6 +14,8 @@ public interface AbstractDao<E extends IdentifiedEntity, I extends Serializable>
 
     List<E> findBy(String field, Object value, Integer limit, Integer offset);
 
+    List<E> findLike(String field, Object similarValue, Integer limit, Integer offset);
+
     E findById(I id);
 
     I save(E entity);
@@ -47,5 +49,5 @@ public interface AbstractDao<E extends IdentifiedEntity, I extends Serializable>
 
     List<E> findAllAndSortBy(String columnName, boolean isAsc, Integer offset, Integer limit);
 
-
+    List<E> findBySomeFieldLike(String value);
 }

@@ -15,22 +15,25 @@ import ru.innopolis.dmd.project.service.UserService;
 public class UserServiceImpl extends AbstractServiceImpl<User, Long> implements UserService {
 
     @Autowired
+    private UserDao userDao;
+
+    @Autowired
     public UserServiceImpl(UserDao userDao) {
         super(userDao);
     }
 
     @Override
     public boolean exists(String login) {
-        return false;
+        return userDao.findByLogin(login) != null;
     }
 
     @Override
     public User findByLogin(String login) {
-        return null;
+        return userDao.findByLogin(login);
     }
 
     @Override
     public User findByLoginIgnoreCase(String login) {
-        return null;
+        return userDao.findByLoginIgnoringCase(login);
     }
 }

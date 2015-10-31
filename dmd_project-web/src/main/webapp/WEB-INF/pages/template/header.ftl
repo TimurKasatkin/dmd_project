@@ -1,3 +1,5 @@
+<#assign security=JspTaglibs["http://www.springframework.org/security/tags"]>
+<#assign spring=JspTaglibs["http://www.springframework.org/tags"]>
 <header id="header" class="full-header">
 
     <div id="header-wrap">
@@ -9,9 +11,8 @@
             <!-- Logo
             ============================================= -->
             <div id="logo">
-                <a href="/" class="standard-logo"><img src="/resources/images/logo1.png"
-                                                       alt="Innopolis Publications"></a>
-                <a href="/" class="retina-logo"><img src="/resources/images/logo1.png" alt="Innopolis Publications"></a>
+                <a href="/" class="standard-logo"><img alt="Innopolis Publications"></a>
+                <a href="/" class="retina-logo"><img alt="Innopolis Publications"></a>
             </div>
             <!-- #logo end -->
 
@@ -19,8 +20,9 @@
             ============================================= -->
             <nav id="primary-menu">
 
+            <@security.authorize access="isAuthenticated()">
                 <ul>
-                    <li><a href="/">
+                    <li><a href="/articles">
                         <div>Articles</div>
                     </a>
 
@@ -57,8 +59,33 @@
                     </li>
                 </ul>
 
+                <ul class="js-toplinks">
+                    <@security.authentication property="principal.username" var='principal' scope='page'/>
+                    <li class="current">
+                        <a href="#">
+                            <div>${principal}</div>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#">Profile</a>
+                            </li>
+                            <li>
+                                <a href="#" class="js-exit">Logout
+                                    <form id="js-exitForm" action="/logout" method="post">
+                                        <button style="display: none"
+                                                type="submit">
+                                        </button>
+                                    </form>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+                </ul>
+
+
                 <!-- Top Search
-                ============================================= -->
+            ============================================= -->
                 <div id="top-search">
                     <a href="#" id="top-search-trigger"><i class="icon-search3"></i><i class="icon-line-cross"></i></a>
 
@@ -67,6 +94,7 @@
                     </form>
                 </div>
                 <!-- #top-search end -->
+            </@security.authorize>
 
             </nav>
             <!-- #primary-menu end -->

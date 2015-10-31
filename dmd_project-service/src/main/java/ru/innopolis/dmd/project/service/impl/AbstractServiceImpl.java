@@ -43,7 +43,12 @@ public abstract class AbstractServiceImpl<E extends IdentifiedEntity, I extends 
 
     @Override
     public List<E> findLike(String field, Object value, Integer offset, Integer limit) {
-        return null;
+        return abstractDao.findLike(field, value, offset, limit);
+    }
+
+    @Override
+    public List<E> findBySomeFieldLike(String value) {
+        return abstractDao.findBySomeFieldLike(value);
     }
 
     @Override
@@ -53,7 +58,7 @@ public abstract class AbstractServiceImpl<E extends IdentifiedEntity, I extends 
 
     @Override
     public E findById(I id) {
-        return null;
+        return abstractDao.findById(id);
     }
 
     @Override

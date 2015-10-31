@@ -22,4 +22,5 @@ public class ExceptionController {
         return "error/404";
     }
 
+
 }
