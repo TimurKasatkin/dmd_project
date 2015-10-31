@@ -7,6 +7,14 @@ package ru.innopolis.dmd.project.web.util;
  */
 public interface Constants {
 
-    int ARTICLE_PAGE_LIMIT = 50;
+    int ARTICLES_PAGE_LIMIT = 50;
+
+    int AUTHORS_PAGE_LIMIT = 50;
+
+    int CONFERENCES_PAGE_LIMIT = 50;
+
+    int JOURNALS_PAGE_LIMIT = 100;
+
+    int KEYWORDS_PAGE_LIMIT = 50;
 
 }

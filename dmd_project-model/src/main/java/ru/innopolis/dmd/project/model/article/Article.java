@@ -12,10 +12,8 @@ import java.util.List;
  */
 public abstract class Article extends LongIdEntity {
 
+    protected ArticleType publtype;
     private String title;
-
-    private ArticleType publtype;
-
     private String url;
 
     private Integer year;

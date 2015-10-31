@@ -31,4 +31,4 @@
 
 </div>
 </#macro>
-<@main title="Publication"/>
+<@main title="Publications"/>

@@ -66,14 +66,14 @@ public abstract class AbstractDaoImpl<E extends IdentifiedEntity, I extends Seri
     @Override
     public List<E> findBy(String field, Object value, Integer limit, Integer offset) {
         return proxy(jdbcTemplate.query(format("SELECT {0} FROM {1} {2} WHERE {3}=? LIMIT {4} OFFSET {5};",
-                        tableFieldsStr, tableName, alias, field, limit, offset),
+                        tableFieldsStr, tableName, alias, field, limit.toString(), offset.toString()),
                 (rs, rowNum) -> extractEntity(entityClass, rs), value));
     }
 
     @Override
     public List<E> findLike(String field, Object similarValue, Integer limit, Integer offset) {
         return proxy(jdbcTemplate.query(format("SELECT {0} FROM {1} {2} WHERE {3} ~* '{4}' LIMIT {5} OFFSET {5};",
-                tableFieldsStr, tableName, alias, field, similarValue, limit, offset), rowMapper()));
+                tableFieldsStr, tableName, alias, field, similarValue, limit.toString(), offset.toString()), rowMapper()));
     }
 
     @Override
@@ -112,7 +112,7 @@ public abstract class AbstractDaoImpl<E extends IdentifiedEntity, I extends Seri
     public List<E> findAllAndSortBy(String columnName, boolean isAsc, Integer offset, Integer limit) {
         return proxy(jdbcTemplate.query(
                 format("SELECT {0} FROM {1} {2} ORDER BY {3} {4} LIMIT {5} OFFSET {6};",
-                        tableFieldsStr, tableName, alias, columnName, isAsc ? "ASC" : "DESC", limit, offset),
+                        tableFieldsStr, tableName, alias, columnName, isAsc ? "ASC" : "DESC", limit.toString(), offset.toString()),
                 rowMapper()));
     }
 

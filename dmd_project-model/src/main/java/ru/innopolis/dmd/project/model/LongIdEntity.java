@@ -3,7 +3,7 @@ package ru.innopolis.dmd.project.model;
 /**
  * Created by timur on 15.10.15.
  */
-public abstract class LongIdEntity implements IdentifiedEntity {
+public abstract class LongIdEntity implements IdentifiedEntity<Long> {
 
     protected Long id;
 
@@ -19,6 +19,7 @@ public abstract class LongIdEntity implements IdentifiedEntity {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

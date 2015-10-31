@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class AbstractServiceImpl<E extends IdentifiedEntity, I extends Serializable> implements AbstractService<E, I> {
 
 
-    private AbstractDao<E, I> abstractDao;
+    protected AbstractDao<E, I> abstractDao;
 
     public AbstractServiceImpl(AbstractDao<E, I> abstractDao) {
         this.abstractDao = abstractDao;

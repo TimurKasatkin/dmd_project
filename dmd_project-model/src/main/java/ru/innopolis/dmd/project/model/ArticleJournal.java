@@ -7,7 +7,9 @@ import java.io.Serializable;
 /**
  * Created by timur on 15.10.15.
  */
-public class ArticleJournal implements IdentifiedEntity {
+public class ArticleJournal implements IdentifiedEntity<ArticleJournal.ArticleJournalId> {
+
+    private ArticleJournalId id;
 
     private JournalArt article;
 
@@ -18,6 +20,11 @@ public class ArticleJournal implements IdentifiedEntity {
     private String number;
 
     public ArticleJournal() {
+    }
+
+    public ArticleJournal(Long articleId, Long journalId, String volume, String number) {
+        this(volume, number);
+        id = new ArticleJournalId(articleId, journalId);
     }
 
     public ArticleJournal(String volume, String number) {
@@ -81,8 +88,44 @@ public class ArticleJournal implements IdentifiedEntity {
     }
 
     @Override
-    //TODO realize
-    public Serializable getId() {
-        return null;
+    public ArticleJournalId getId() {
+        return id;
     }
+
+    @Override
+    public void setId(ArticleJournalId id) {
+        this.id = id;
+    }
+
+    public static class ArticleJournalId implements Serializable {
+
+        private Long articleId;
+
+        private Long journalId;
+
+        public ArticleJournalId() {
+        }
+
+        public ArticleJournalId(Long articleId, Long journalId) {
+            this.articleId = articleId;
+            this.journalId = journalId;
+        }
+
+        public Long getArticleId() {
+            return articleId;
+        }
+
+        public void setArticleId(Long articleId) {
+            this.articleId = articleId;
+        }
+
+        public Long getJournalId() {
+            return journalId;
+        }
+
+        public void setJournalId(Long journalId) {
+            this.journalId = journalId;
+        }
+    }
+
 }

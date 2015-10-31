@@ -58,6 +58,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Autowired
     public freemarker.template.Configuration freeMarkerConfiguration(FreeMarkerConfig config) {
         freemarker.template.Configuration configuration = config.getConfiguration();
+        configuration.setNumberFormat("computer");
         return configuration;
     }
 

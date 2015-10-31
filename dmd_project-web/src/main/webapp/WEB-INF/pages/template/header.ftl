@@ -22,40 +22,37 @@
 
             <@security.authorize access="isAuthenticated()">
                 <ul>
-                    <li><a href="/articles">
-                        <div>Articles</div>
-                    </a>
+                    <li>
+                        <a href="/articles">
+                            <div>Articles</div>
+                        </a>
 
                     </li>
 
-                    <li><a href="/authors">
-                        <div>Authors</div>
-                    </a>
+                    <li>
+                        <a href="/authors">
+                            <div>Authors</div>
+                        </a>
 
                     </li>
 
-                    <li class="mega-menu"><a href="/conferences">
-                        <div>Conferences</div>
-                    </a>
+                    <li class="mega-menu">
+                        <a href="/conferences">
+                            <div>Conferences</div>
+                        </a>
 
                     </li>
 
-                    <li class="mega-menu"><a href="/journals">
-                        <div>Journals</div>
-                    </a>
-
-                        <div class="mega-menu-content style-2 col-5 clearfix">
-
-                        </div>
+                    <li class="mega-menu">
+                        <a href="/journals">
+                            <div>Journals</div>
+                        </a>
                     </li>
 
-                    <li class="mega-menu"><a href="/keywords">
-                        <div>Keywords</div>
-                    </a>
-
-                        <div class="mega-menu-content style-2 col-4 clearfix">
-
-                        </div>
+                    <li class="mega-menu">
+                        <a href="/keywords">
+                            <div>Keywords</div>
+                        </a>
                     </li>
                 </ul>
 

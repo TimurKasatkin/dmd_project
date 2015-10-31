@@ -12,7 +12,7 @@ public class JournalArt extends Article {
     private ArticleJournal journalLink;
 
     public JournalArt() {
-        setPubltype(ArticleType.JOURNAL_ARTICLE);
+        publtype = ArticleType.JOURNAL_ARTICLE;
     }
 
     public JournalArt(String title, String url, Integer year) {

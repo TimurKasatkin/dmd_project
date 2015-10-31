@@ -40,7 +40,9 @@ public class EntityMapper {
 
     private static ArticleJournal extractArticleJournal(ResultSet rs) {
         try {
-            return new ArticleJournal(extractIfContains(String.class, "articlejournal_volume", rs),
+            return new ArticleJournal(extractIfContains(Long.class, "articlejournal_article_id", rs),
+                    extractIfContains(Long.class, "articlejournal_journal_id", rs),
+                    extractIfContains(String.class, "articlejournal_volume", rs),
                     extractIfContains(String.class, "articlejournal_number", rs));
         } catch (SQLException e) {
             e.printStackTrace();

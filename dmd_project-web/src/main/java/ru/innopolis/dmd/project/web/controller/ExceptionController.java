@@ -22,5 +22,12 @@ public class ExceptionController {
         return "error/404";
     }
 
+    //TODO fix 500 error page
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler({Throwable.class})
+//    public String error500(Exception e) {
+//        return "error/500";
+//    }
+
 
 }

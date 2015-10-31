@@ -5,6 +5,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.innopolis.dmd.project.dao.ArticleDao;
+import ru.innopolis.dmd.project.dao.util.EntityMapper;
 import ru.innopolis.dmd.project.model.*;
 import ru.innopolis.dmd.project.model.article.Article;
 import ru.innopolis.dmd.project.model.article.ConferenceArt;
@@ -87,8 +88,8 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
     @Override
     public List<JournalArt> findAllJournalArticles() {
         String sql = format("SELECT {0}, {1}, {2} " +
-                "FROM articles {3} " +
-                "JOIN article_journal {4} ON {3}.id = {4}.article_id " +
+                        "FROM articles {3} " +
+                        "JOIN article_journal {4} ON {3}.id = {4}.article_id " +
                         "JOIN journals {5} ON  {4}.journal_id = {5}.id",
                 tableFieldsStr,
                 fieldsStr(ArticleJournal.class),
@@ -136,14 +137,20 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
                 "JOIN article_author aa ON a.id = aa.article_id " +
                 "JOIN authors auth ON auth.id = aa.author_id " +
                 "WHERE auth.first_name=? AND last_name=?;";
-        return jdbcTemplate.query(sql,
+        return proxy(jdbcTemplate.query(sql,
                 (rs, rowNum) -> extractEntity(Article.class, rs),
-                author.getFirstName(), author.getLastName());
+                author.getFirstName(), author.getLastName()));
     }
 
     @Override
     public List<JournalArt> findByJournal(Journal journal) {
-        throw new NotImplementedException();
+        return proxy(jdbcTemplate.query("SELECT " + tableFieldsStr + " " +
+                        "FROM journals j " +
+                        "JOIN article_journal aj ON j.id = aj.journal_id " +
+                        "JOIN articles a ON a.id = aj.article_id " +
+                        "WHERE j.id=?",
+                (rs, rowNum) -> EntityMapper.extractEntity(JournalArt.class, rs),
+                journal.getId()));
     }
 
     @Override
