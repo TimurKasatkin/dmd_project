@@ -1856,7 +1856,7 @@ body:not(.device-sm):not(.device-xs):not(.device-xxs) #primary-menu.style-2.cent
 
 #primary-menu.sub-title > ul > li,
 #primary-menu.sub-title.style-2 > div > ul > li {
-	background: url("images/icons/menu-divider.png") no-repeat right center;
+	background: url("../../images/icons/menu-divider.png") no-repeat right center;
 	margin-left: 1px;
 }
 
@@ -3958,7 +3958,7 @@ body.stretched .container-fullwidth .breadcrumb {
 #content {
 	position: relative;
 	overflow: hidden;
-	background-image: url(/resources/images/bg.jpg);
+	background-image: url(../../images/bg.jpg);
 }
 
 #content p {
