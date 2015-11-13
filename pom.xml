@@ -212,31 +212,29 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>org.apache.tomcat.maven</groupId>-->
-            <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
-            <!--&lt;!&ndash; or if you want to use tomcat 6.x-->
-            <!--<artifactId>tomcat6-maven-plugin</artifactId>-->
-            <!--&ndash;&gt;-->
-            <!--<version>2.2</version>-->
-            <!--<configuration>-->
-            <!--&lt;!&ndash; http port &ndash;&gt;-->
-            <!--<port>9090</port>-->
-            <!--&lt;!&ndash; application path always starts with /&ndash;&gt;-->
-            <!--<path>/</path>-->
-            <!--&lt;!&ndash; optional path to a context file &ndash;&gt;-->
-            <!--<contextFile>${tomcatContextXml}</contextFile>-->
-            <!--&lt;!&ndash; optional system propoerties you want to add &ndash;&gt;-->
-            <!--<systemProperties>-->
-            <!--<appserver.base>${project.build.directory}/appserver-base</appserver.base>-->
-            <!--<appserver.home>${project.build.directory}/appserver-home</appserver.home>-->
-            <!--<derby.system.home>${project.build.directory}/appserver-base/logs</derby.system.home>-->
-            <!--<java.io.tmpdir>${project.build.directory}</java.io.tmpdir>-->
-            <!--</systemProperties>-->
-            <!--&lt;!&ndash; if you want to use test dependencies rather than only runtime &ndash;&gt;-->
-            <!--<useTestClasspath>false</useTestClasspath>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.jsimone</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>7.0.57.2</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

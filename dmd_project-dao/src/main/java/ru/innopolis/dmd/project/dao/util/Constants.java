@@ -31,6 +31,7 @@ public interface Constants {
                     new SimpleEntry<>(Keyword.class, "keywords"),
                     new SimpleEntry<>(User.class, "users")
             ).collect(toMap(Entry::getKey, Entry::getValue));
+
     Map<String, String> DEFAULT_TABLE_ALIAS =
             Stream.of(
                     new SimpleEntry<>("article_author", "aa"),
@@ -44,6 +45,7 @@ public interface Constants {
                     new SimpleEntry<>("keywords", "k"),
                     new SimpleEntry<>("users", "u")
             ).collect(toMap(Entry::getKey, Entry::getValue));
+
     Map<String, String[]> TABLE_FIELDS =
             Stream.of(
                     new SimpleEntry<>("article_author",
@@ -68,6 +70,7 @@ public interface Constants {
                     new SimpleEntry<>("users",
                             new String[]{"id", "login", "password", "email", "role"})
             ).collect(toMap(Entry::getKey, Entry::getValue));
+
     String POSTGRESQL_URL = "jdbc:postgresql://localhost:5432/dmd_semester_task";
     String POSTGRESQL_LOGIN = "postgres";
     String POSTGRESQL_PASSWORD = "postgres";

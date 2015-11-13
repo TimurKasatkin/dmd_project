@@ -1,12 +1,14 @@
 package ru.innopolis.dmd.project.dao.postgresql;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.innopolis.dmd.project.dao.AuthorDao;
 import ru.innopolis.dmd.project.model.Author;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 /**
@@ -24,19 +26,33 @@ public class AuthorDaoImpl extends AbstractDaoImpl<Author, Long> implements Auth
 
     @Override
     public Long save(Author entity) {
-        throw new NotImplementedException();
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps
+                    = con.prepareStatement("INSERT INTO authors (first_name, last_name) VALUES (?,?)", new String[]{"id"});
+            ps.setString(1, entity.getFirstName());
+            ps.setString(2, entity.getLastName());
+            return ps;
+        }, keyHolder);
+        return keyHolder.getKey().longValue();
     }
 
     @Override
     public void update(Author entity) {
-        throw new NotImplementedException();
+        jdbcTemplate.update("UPDATE authors " +
+                        "SET id=?,first_name=?,last_name=? " +
+                        "WHERE id=?",
+                entity.getId(),
+                entity.getFirstName(),
+                entity.getLastName(),
+                entity.getId());
     }
 
     @Override
     public List<Author> findBySomeFieldLike(String value) {
         return proxy(jdbcTemplate.query("SELECT " + tableFieldsStr + " " +
-                "FROM authors auth " +
-                "WHERE auth.first_name ~* ? OR auth.last_name ~* ?;"
+                        "FROM authors auth " +
+                        "WHERE auth.first_name ~* ? OR auth.last_name ~* ?;"
                 , rowMapper(), value, value));
     }
 

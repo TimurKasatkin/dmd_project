@@ -11,12 +11,13 @@ import ru.innopolis.dmd.project.model.article.Article;
 import ru.innopolis.dmd.project.model.article.ConferenceArt;
 import ru.innopolis.dmd.project.model.article.JournalArt;
 import ru.innopolis.dmd.project.model.enums.ArticleType;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.text.MessageFormat.format;
 import static ru.innopolis.dmd.project.dao.util.EntityMapper.extractEntity;
@@ -29,8 +30,8 @@ import static ru.innopolis.dmd.project.dao.util.SQLUtils.fieldsStr;
 @Repository("articleDao")
 public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements ArticleDao {
 
-    public final static String INSERT_SQL =
-            "INSERT INTO articles(title, publtype, url, \"year\") VALUES (?,?,?,?)";
+    private final static String INSERT_SQL =
+            "INSERT INTO articles(title, publtype, url, year) VALUES (?,?,?,?)";
 
     @Autowired
     public ArticleDaoImpl(DataSource dataSource) {
@@ -120,14 +121,44 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
     @Override
     public List<Article> findBySomeFieldLike(String value) {
         return proxy(jdbcTemplate.query("SELECT " + tableFieldsStr + " " +
-                "FROM articles a " +
-                "WHERE a.title ~* ?"
+                        "FROM articles a " +
+                        "WHERE a.title ~* ?"
                 , rowMapper(), value));
     }
 
     @Override
     public List<Article> findByKeywords(boolean shouldIncludeAll, String... keywords) {
-        throw new NotImplementedException();
+        String sql;
+        String keywordsStr = Stream.of(keywords)
+                .map(s -> "'" + s.replace("'", "''") + "'").collect(Collectors.joining());
+        if (shouldIncludeAll)
+            sql = "SELECT DISTINCT " + tableFieldsStr + " " +
+                    "FROM articles a, article_keyword ak " +
+                    "WHERE a.id = ak.article_id " +
+                    "AND ak.article_id IN (SELECT ak.article_id AS id " +
+                    /*                   */"FROM article_keyword ak " +
+                    /*                   */"WHERE ak.keyword_id IN (SELECT k.id " +
+                    /*                                           */"FROM keywords k " +
+                    /*                                           */"WHERE k.word IN (" + keywordsStr + ")) " +
+                    /*                                           */"GROUP BY ak.article_id " +
+                    /*                                           */"HAVING count(*) = " + keywords.length + ");";
+        else {
+            sql = "SELECT DISTINCT " + tableFieldsStr + " " +
+                    "FROM articles AS a " +
+                    "JOIN article_keyword ak ON a.id = ak.article_id " +
+                    "WHERE ak.keyword_id IN (SELECT id " +
+                    /*                   */"FROM keywords " +
+                    /*                   */"WHERE word IN (" + keywordsStr + "))";
+        }
+        return proxy(jdbcTemplate.query(sql, rowMapper()));
+    }
+
+    @Override
+    public List<Article> findByKeyword(String keyword) {
+        return proxy(jdbcTemplate.query("SELECT " + tableFieldsStr + " FROM articles a " +
+                "JOIN article_keyword ak ON a.id = ak.article_id " +
+                "JOIN keywords k ON ak.keyword_id = k.id " +
+                "WHERE k.word=?", rowMapper(), keyword));
     }
 
     @Override
@@ -136,10 +167,8 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
                 "FROM articles a " +
                 "JOIN article_author aa ON a.id = aa.article_id " +
                 "JOIN authors auth ON auth.id = aa.author_id " +
-                "WHERE auth.first_name=? AND last_name=?;";
-        return proxy(jdbcTemplate.query(sql,
-                (rs, rowNum) -> extractEntity(Article.class, rs),
-                author.getFirstName(), author.getLastName()));
+                "WHERE auth.id=?;";
+        return proxy(jdbcTemplate.query(sql, rowMapper(), author.getId()));
     }
 
     @Override
@@ -155,7 +184,13 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
 
     @Override
     public List<ConferenceArt> findByConference(Conference conference) {
-        throw new NotImplementedException();
+        return proxy(jdbcTemplate.query("SELECT " + tableFieldsStr + " " +
+                        "FROM conferences c " +
+                        "JOIN article_conference ac ON c.id = ac.conference_id " +
+                        "JOIN articles a ON ac.article_id = a.id " +
+                        "WHERE c.id=?",
+                (rs, rowNum) -> EntityMapper.extractEntity(ConferenceArt.class, rs),
+                conference.getId()));
     }
 
     @Override
@@ -175,10 +210,9 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
     }
 
     @Override
-    //TODO think about related entities
     public void update(Article entity) {
         jdbcTemplate.update("UPDATE articles " +
-                        "SET id=?,title=?,publtype=?,url=?,\"year\"=? " +
+                        "SET id=?,title=?,publtype=?,url=?,year=? " +
                         "WHERE id=?;",
                 entity.getId(),
                 entity.getTitle(),

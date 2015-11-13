@@ -3,6 +3,7 @@ package ru.innopolis.dmd.project.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.innopolis.dmd.project.dao.ArticleDao;
+import ru.innopolis.dmd.project.model.Author;
 import ru.innopolis.dmd.project.model.Conference;
 import ru.innopolis.dmd.project.model.Journal;
 import ru.innopolis.dmd.project.model.article.Article;
@@ -38,4 +39,20 @@ public class ArticleServiceImpl extends AbstractServiceImpl<Article, Long> imple
     public List<ConferenceArt> findByConference(Conference conference) {
         return articleDao.findByConference(conference);
     }
+
+    @Override
+    public List<Article> findByAuthor(Author author) {
+        return articleDao.findByAuthor(author);
+    }
+
+    @Override
+    public List<Article> findByKeyword(String keyword) {
+        return articleDao.findByKeyword(keyword);
+    }
+
+    @Override
+    public List<Article> findByKeywords(boolean shouldIncludeAll, String... keywords) {
+        return articleDao.findByKeywords(shouldIncludeAll, keywords);
+    }
+
 }

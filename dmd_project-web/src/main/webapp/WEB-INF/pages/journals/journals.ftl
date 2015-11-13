@@ -2,11 +2,11 @@
 <#macro body>
 <div class="content-wrap">
     <div class="container clearfix">
-        <center><h2>Journal</h2></center>
+        <center><h2>Journals</h2></center>
 
         <div class="row">
-            <#assign rows_per_col=(journals?size/4)?ceiling>
             <#assign journals_size=journals?size>
+            <#assign rows_per_col=(journals_size/4)?ceiling>
             <#list 0..3 as i>
                 <#assign col_class='col_one_fourth'>
                 <#if i==3>

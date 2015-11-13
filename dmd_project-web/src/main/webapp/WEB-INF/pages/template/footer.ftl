@@ -9,9 +9,10 @@
             <div class="col_one_third">
 
                 <div class="widget clearfix">
-                    <div style="background: url('../images/world-map.png') no-repeat center center; background-size: 100%;">
+                    <div style="background: url('/resources/images/canvas/world-map.png') no-repeat center center; background-size: 100%;">
 
                         <p>Kasatkin Timur</p>
+
                         <p>Sarbaev Philipp</p>
                         <address>
                             <strong>University Innopolis</strong><br>
@@ -22,28 +23,6 @@
                 </div>
 
             </div>
-
-            <div class="col_one_third" style="position: relative; left: 90%">
-
-                <div class="widget widget_links clearfix">
-
-                    <h4>Navigation</h4>
-
-                    <ul>
-                        <li><a href="/articles">Articles</a></li>
-                        <li><a href="/authors">Authors</a></li>
-                        <li><a href="/conferences">Conferences</a></li>
-                        <li><a href="/journals">Journals</a></li>
-                        <li><a href="/keywords">Keywords</a></li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-
-
-
 
         </div>
 
@@ -72,8 +51,8 @@
                 </div>
 
                 <div class="clear"></div>
-                <i class="icon-envelope2"></i> t.kasatkin@innopolis.ru<span class="middot">&middot;</span><i
-                    class="icon-envelope2"></i> f.sarbaev@innopolis.ru
+                <i class="icon-envelope2"></i> t.kasatkin@innopolis.ru<span class="middot">&middot;</span>
+                <i class="icon-envelope2"></i> f.sarbaev@innopolis.ru
             </div>
 
         </div>
@@ -83,17 +62,3 @@
 
 </footer>
 <!-- #footer end -->
-
-</div>
-<!-- #wrapper end -->
-
-<!-- Go To Top
-============================================= -->
-<div id="gotoTop" class="icon-angle-up"></div>
-
-<!-- Footer Scripts
-============================================= -->
-<script type="text/javascript" src="../js/canvas/functions.js"></script>
-
-</body>
-</html>

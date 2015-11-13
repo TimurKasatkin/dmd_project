@@ -27,21 +27,15 @@ public class ArticlesController {
     public String articles(@RequestParam(required = false, defaultValue = "title") String sortBy,
                            @RequestParam(required = false, defaultValue = "0") int offset,
                            @RequestParam(required = false, defaultValue = "true") boolean isAsc,
+                           @RequestParam(required = false) String keyword,
                            ModelMap map) {
-        map.addAttribute("articles", articleService
-                .findAllSortedBy(sortBy, isAsc, offset, ARTICLES_PAGE_LIMIT));
+
+        map.addAttribute("articles", keyword == null ? articleService
+                .findAllSortedBy(sortBy, isAsc, offset, ARTICLES_PAGE_LIMIT) : articleService.findBySomeFieldLike(keyword));
         map.addAttribute("sortBy", sortBy);
         map.addAttribute("offset", offset);
         map.addAttribute("isAsc", isAsc);
-//        if (offset == 0)
         return "articles/articles";
-//        return "articles/articlesInclude";
     }
-
-//    @RequestMapping(value = "/articles/{id:[1-9]+\\d*}", method = RequestMethod.GET)
-//    public String articleById(@PathVariable Long id, ModelMap map) {
-//        map.addAttribute("articles", articleService.findBy("id", id));
-//        return "articlesInclude";
-//    }
 
 }

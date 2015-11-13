@@ -1856,7 +1856,7 @@ body:not(.device-sm):not(.device-xs):not(.device-xxs) #primary-menu.style-2.cent
 
 #primary-menu.sub-title > ul > li,
 #primary-menu.sub-title.style-2 > div > ul > li {
-	background: url("../../images/icons/menu-divider.png") no-repeat right center;
+	background: url("/resources/images/canvas/icons/menu-divider.png") no-repeat right center;
 	margin-left: 1px;
 }
 
@@ -3154,7 +3154,7 @@ body.side-push-panel.side-panel-open .body-overlay {
 }
 
 body.side-push-panel.side-panel-open:not(.device-xxs):not(.device-xs):not(.device-sm) .body-overlay:hover {
-	cursor: url('images/icons/close.png') 15 15, default;
+	cursor: url('/resources/images/canvas/icons/close.png') 15 15, default;
 }
 
 
@@ -3296,7 +3296,7 @@ body.side-push-panel.side-panel-open:not(.device-xxs):not(.device-xs):not(.devic
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	background: url('images/pattern2.png') repeat;
+	background: url('/resources/images/canvas/pattern2.png') repeat;
 }
 
 .swiper_wrapper .swiper-slide {
@@ -3958,7 +3958,7 @@ body.stretched .container-fullwidth .breadcrumb {
 #content {
 	position: relative;
 	overflow: hidden;
-	background-image: url(../../images/bg.jpg);
+	background-image: url(/resources/images/bg.jpg);
 }
 
 #content p {

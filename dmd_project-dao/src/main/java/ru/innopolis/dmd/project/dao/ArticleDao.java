@@ -33,6 +33,8 @@ public interface ArticleDao extends AbstractDao<Article, Long> {
 
     List<Article> findByKeywords(boolean shouldIncludeAll, String... keywords);
 
+    List<Article> findByKeyword(String keyword);
+
     List<Article> findByAuthor(Author author);
 
     List<JournalArt> findByJournal(Journal journal);
