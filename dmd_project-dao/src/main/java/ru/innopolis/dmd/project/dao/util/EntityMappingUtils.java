@@ -16,14 +16,16 @@ import static ru.innopolis.dmd.project.dao.util.ResultSetUtils.contains;
 import static ru.innopolis.dmd.project.dao.util.ResultSetUtils.extractIfContains;
 
 /**
- * Created by timur on 15.10.15.
+ * @author Timur Kasatkin
+ * @date 15.10.15.
+ * @email aronwest001@gmail.com
  */
-public class EntityMapper {
+public class EntityMappingUtils {
 
     @SuppressWarnings("unchecked")
     public static <E extends IdentifiedEntity> E extractEntity(Class<? extends IdentifiedEntity> entClass, ResultSet rs) {
         try {
-            return (E) EntityMapper.class
+            return (E) EntityMappingUtils.class
                     .getDeclaredMethod("extract" + entClass.getSimpleName(), ResultSet.class).invoke(null, rs);
         } catch (NullPointerException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             throw new IllegalArgumentException("There is no mapping method for such entity");
