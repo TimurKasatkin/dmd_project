@@ -16,12 +16,13 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th><a href="${sortByUrl('title')}">Title</a> ${arrayIfSortedBy('title')}</th>
-                <th>Authors</th>
-                <th><a href="${sortByUrl('year')}">Year</a> ${arrayIfSortedBy('year')}</th>
-                <th>Keywords</th>
-                <th>Journal</th>
-                <th>Conference</th>
+                <th width="25%"><a href="${sortByUrl('title')}">Title</a> ${arrayIfSortedBy('title')}</th>
+                <th width="25%">Authors</th>
+                <th width="10%"><a href="${sortByUrl('year')}">Year</a> ${arrayIfSortedBy('year')}</th>
+                <th width="10%">Keywords</th>
+                <th width="10%">Journal</th>
+                <th width="10%">Conference</th>
+                <th width="10%">Update/Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -40,6 +41,43 @@
             </tbody>
         </table>
     </div>
+
+    <!-- modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="updateModalLabel">Modal Heading</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th width="50%"><a href="#">Title</a></th>
+                                <th width="25%"><a href="#">URL</a></th>
+                                <th width="25%"><a href="#">Year</a></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><input id="modintitle" type="text" value="ada"></input></td>
+                                <td><input id="modinurl" type="text" value="hhawjdhja.com"></input></td>
+                                <td><input id="modinyear" type="text" value="2300"></input></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modal -->
 
 </div>
 </#macro>

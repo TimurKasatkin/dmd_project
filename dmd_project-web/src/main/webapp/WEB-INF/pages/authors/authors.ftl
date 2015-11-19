@@ -8,7 +8,7 @@
             <#list authors as author>
                 <#assign f=author.firstName>
                 <#assign l=author.lastName>
-                <div class="col-md-3">
+                <div id="author" class="col-md-3">
                     <div class="feature-box fbox-center fbox-bg fbox-light fbox-effect">
                         <div class="fbox-icon">
                             <a href="/authors/${author.id}"><i class="i-alt">${f?substring(0,1)}${l?substring(0,1)}</i></a>

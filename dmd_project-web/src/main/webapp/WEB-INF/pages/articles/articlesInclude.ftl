@@ -1,5 +1,5 @@
 <#list articles as article>
-<tr>
+<tr id="art${article.id}">
     <td><a href="${article.url}">${article.title}</a></td>
     <td>
         <#if article.authors??>
@@ -40,5 +40,6 @@
             <a href="/conferences/${article.conference.id}">${article.conference.name}</a>
         </#if>
     </td>
+    <td><a data-toggle="modal" data-target="#updateModal" onclick="changeUpdateModal(${article.id})"><i class="icon-pencil2"></i></a>/<i class="icon-legal"></i></td>
 </tr>
 </#list>

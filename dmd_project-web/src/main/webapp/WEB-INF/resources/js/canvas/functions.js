@@ -4,6 +4,18 @@ $.fn.inlineStyle = function (prop) {
     return this.prop("style")[$.camelCase(prop)];
 };
 
+function changeUpdateModal(id){
+    var row, title, url, year;
+    row = document.getElementById("art"+id);
+    title = row.children[0].firstElementChild.innerHTML;
+    url = row.children[0].firstElementChild.getAttribute("href");
+    year = row.children[2].innerHTML;
+    document.getElementById("modintitle").value = title;
+    document.getElementById("modinurl").value = url;
+    document.getElementById("modinyear").value = year;
+    document.getElementById("updateModalLabel").innerHTML = "Update article with id = " + id;
+}
+
 $.fn.doOnce = function (func) {
     this.length && func.apply(this);
     return this;
