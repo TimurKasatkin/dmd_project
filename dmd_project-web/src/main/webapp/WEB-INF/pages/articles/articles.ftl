@@ -34,6 +34,7 @@
                            aria-required="true"/>
                     <span class="input-group-btn">
                         <button class="btn btn-success" type="submit">Filter</button>
+                        <button class="btn btn-success" data-toggle="modal" data-target="#insertModal">Insert</button>
                     </span>
                 </div>
             </form>
@@ -68,6 +69,62 @@
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="updateModalLabel">Insert new article</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <table cellspacing="10">
+                                <tr>
+                                    <td ><label class="description" for="titlein">Title:</label></td>
+                                    <td><input id="titlein" name="titlein" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="description" for="urlin">URL:</label></td>
+                                    <td><input id="urlin" name="urlin" type="URL"></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="description" for="yearin">Year:</label></td>
+                                    <td><input id="yearin" name="yearin" type="year" pattern="[0-9]{4}"></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="description">Conference or Journal:</label></td>
+                                    <td><select id="cjin" onchange="changeJoOrCo()">
+                                        <option>Journal</option>
+                                        <option>Conference</option>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td ><label class="description" for="journalin">Journal:</label></td>
+                                    <td><input id="journalin" name="journalin" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td ><label class="description" for="conferencein">Conference:</label></td>
+                                    <td><input id="conferencein" name="conferencein" type="text" disabled="disabled"></td>
+                                </tr>
+                                <tr>
+                                    <td ><label class="description" for="titlein">Add author:</label></td>
+                                    <td><i class="i-plain icon-ok" onclick="addAuthor()"></i></td>
+                                </tr>
+                            </table>
+                            <div id="authorDiv">
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

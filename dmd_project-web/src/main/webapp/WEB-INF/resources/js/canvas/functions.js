@@ -14,6 +14,30 @@ function changeUpdateModal(id){
     document.getElementById("modinurl").value = url;
     document.getElementById("modinyear").value = year;
     document.getElementById("updateModalLabel").innerHTML = "Update article with id = " + id;
+    row.rem
+}
+
+function changeJoOrCo(){
+    var objSel = document.getElementById("cjin");
+    if ( objSel.selectedIndex != -1)
+    {
+        if(objSel.options[objSel.selectedIndex].value == "Conference"){
+            document.getElementById("conferencein").removeAttribute("disabled");
+            document.getElementById("journalin").setAttribute("disabled", "disabled");
+        }else{
+            document.getElementById("journalin").removeAttribute("disabled");
+            document.getElementById("conferencein").setAttribute("disabled", "disabled");
+        }
+    }
+}
+
+var authorCount = 0;
+
+function addAuthor(){
+    var newAuthorField = "<label class='description' id='authorLabel" + authorCount + "'>Author" + authorCount + ":</label><br><label class='description' id='firstname" + authorCount + "'>firstname:</label><input id='firstnameIn" + authorCount + "' name='authorin" + authorCount + "' type='text'> <label class='description' id='lastname" + authorCount + "'>lastname:</label><input id='lastnameIn" + authorCount + "' name='authorin" + authorCount + "' type='text'>"
+
+    document.getElementById("authorDiv").innerHTML = document.getElementById("authorDiv").innerHTML + newAuthorField;
+    authorCount++;
 }
 
 $.fn.doOnce = function (func) {
