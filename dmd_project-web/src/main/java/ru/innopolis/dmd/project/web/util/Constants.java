@@ -7,7 +7,7 @@ package ru.innopolis.dmd.project.web.util;
  */
 public interface Constants {
 
-    int ARTICLES_PAGE_LIMIT = 50;
+    int ARTICLES_PAGE_LIMIT = 25;
 
     int AUTHORS_PAGE_LIMIT = 48;
 
