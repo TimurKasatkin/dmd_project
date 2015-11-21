@@ -53,27 +53,29 @@
                         <h4 class="modal-title" id="updateModalLabel">Modal Heading</h4>
                     </div>
                     <div class="modal-body">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th width="50%"><a href="#">Title</a></th>
-                                <th width="25%"><a href="#">URL</a></th>
-                                <th width="25%"><a href="#">Year</a></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><input id="modintitle" type="text" value="ada"></input></td>
-                                <td><input id="modinurl" type="text" value="hhawjdhja.com"></input></td>
-                                <td><input id="modinyear" type="text" value="2300"></input></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <form role="form">
+                            <table class="table table-hover" width="90%">
+                                <thead>
+                                <tr>
+                                    <th width="50%"><a href="#">Title</a></th>
+                                    <th width="25%"><a href="#">URL</a></th>
+                                    <th width="25%"><a href="#">Year</a></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><input id="modintitle" class="form-control" type="text" value="ada"></td>
+                                    <td><input id="modinurl" class="form-control" type="text" value="hhawjdhja.com"></input></td>
+                                    <td><input id="modinyear" class="form-control" type="text" value="2300"></input></td>
+                                </tr>
+                                </tbody>
+                            </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -88,48 +90,58 @@
                         <h4 class="modal-title" id="updateModalLabel">Insert new article</h4>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form role="form">
                             <table cellspacing="10">
                                 <tr>
-                                    <td ><label class="description" for="titlein">Title:</label></td>
-                                    <td><input id="titlein" name="titlein" type="text"></td>
+                                    <div class="form-group">
+                                        <td ><label class="description" for="titlein">Title:</label></td>
+                                        <td><input id="titlein" class="form-control" name="titlein" type="text"></td>
+                                    </div>
                                 </tr>
                                 <tr>
                                     <td><label class="description" for="urlin">URL:</label></td>
-                                    <td><input id="urlin" name="urlin" type="URL"></td>
+                                    <td><input id="urlin" class="form-control" name="urlin" type="URL"></td>
                                 </tr>
                                 <tr>
                                     <td><label class="description" for="yearin">Year:</label></td>
-                                    <td><input id="yearin" name="yearin" type="year" pattern="[0-9]{4}"></td>
+                                    <td><input id="yearin" class="form-control" name="yearin" type="year" pattern="[0-9]{4}"></td>
                                 </tr>
                                 <tr>
                                     <td><label class="description">Conference or Journal:</label></td>
-                                    <td><select id="cjin" onchange="changeJoOrCo()">
+                                    <td><select id="cjin" class="form-control" onchange="changeJoOrCo()">
                                         <option>Journal</option>
                                         <option>Conference</option>
                                     </select></td>
                                 </tr>
                                 <tr>
                                     <td ><label class="description" for="journalin">Journal:</label></td>
-                                    <td><input id="journalin" name="journalin" type="text"></td>
+                                    <td><input id="journalin" class="form-control" name="journalin" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td ><label class="description" for="journalin">Volume:</label></td>
+                                    <td><input id="volumein" class="form-control" name="volumein" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td ><label class="description" for="journalin">Number:</label></td>
+                                    <td><input id="numberin" class="form-control" name="numberin" type="text"></td>
                                 </tr>
                                 <tr>
                                     <td ><label class="description" for="conferencein">Conference:</label></td>
-                                    <td><input id="conferencein" name="conferencein" type="text" disabled="disabled"></td>
+                                    <td><input id="conferencein" class="form-control" name="conferencein" type="text" disabled="disabled"></td>
                                 </tr>
                                 <tr>
                                     <td ><label class="description" for="titlein">Add author:</label></td>
-                                    <td><i class="i-plain icon-ok" onclick="addAuthor()"></i></td>
+                                    <td><i class="i-plain icon-ok" class="form-control" onclick="addAuthor()"></i></td>
                                 </tr>
                             </table>
                             <div id="authorDiv">
                             </div>
-                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

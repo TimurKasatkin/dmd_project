@@ -13,8 +13,6 @@ function changeUpdateModal(id){
     document.getElementById("modintitle").value = title;
     document.getElementById("modinurl").value = url;
     document.getElementById("modinyear").value = year;
-    document.getElementById("updateModalLabel").innerHTML = "Update article with id = " + id;
-    row.rem
 }
 
 function changeJoOrCo(){
@@ -24,8 +22,12 @@ function changeJoOrCo(){
         if(objSel.options[objSel.selectedIndex].value == "Conference"){
             document.getElementById("conferencein").removeAttribute("disabled");
             document.getElementById("journalin").setAttribute("disabled", "disabled");
+            document.getElementById("volumein").setAttribute("disabled", "disabled");
+            document.getElementById("numberin").setAttribute("disabled", "disabled");
         }else{
             document.getElementById("journalin").removeAttribute("disabled");
+            document.getElementById("volumein").removeAttribute("disabled");
+            document.getElementById("numberin").removeAttribute("disabled");
             document.getElementById("conferencein").setAttribute("disabled", "disabled");
         }
     }
