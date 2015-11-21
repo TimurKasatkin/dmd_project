@@ -45,10 +45,13 @@ public class FetchUtils {
                             @Override
                             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                                 if (authors == null) {
+                                    System.out.println("Proxy ARTICLE: authors");
                                     authors = jdbcTemplate.query(
-                                            format("SELECT {0} FROM authors {1} JOIN article_author {2} ON {1}.id = {2}.author_id WHERE {2}.article_id=?",
+                                            format("SELECT {0} FROM authors {1} " +
+                                                    "JOIN article_author {2} ON {1}.id = {2}.author_id " +
+                                                    "WHERE {2}.article_id=?",
                                                     fieldsStr(Author.class), alias(Author.class), alias("article_author")),
-                                            (rs, rowNum) -> EntityMapper.extractEntity(Author.class, rs),
+                                            (rs, rowNum) -> EntityMappingUtils.extractEntity(Author.class, rs),
                                             article.getId());
                                     if (authors != null)
                                         authors.forEach(author -> proxyAuthor(author, jdbcTemplate));
@@ -65,12 +68,13 @@ public class FetchUtils {
                             @Override
                             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                                 if (keywords == null) {
+                                    System.out.println("Proxy ARTICLE: keywords");
                                     keywords = jdbcTemplate.query(
                                             format("SELECT {0} FROM keywords {1} " +
                                                             "JOIN article_keyword {2} ON {1}.id = {2}.keyword_id " +
                                                             "WHERE {2}.article_id=?",
                                                     fieldsStr(Keyword.class), alias(Keyword.class), alias("article_keyword")),
-                                            (rs, rowNum) -> EntityMapper.extractEntity(Keyword.class, rs),
+                                            (rs, rowNum) -> EntityMappingUtils.extractEntity(Keyword.class, rs),
                                             article.getId());
                                     if (keywords != null)
                                         keywords.forEach(keyword -> proxyKeyword(keyword, jdbcTemplate));
@@ -86,11 +90,13 @@ public class FetchUtils {
         if (journalArt != null) {
             proxyArticle(journalArt, jdbcTemplate);
             journalArt.setJournalLink((ArticleJournal) Enhancer.create(ArticleJournal.class, (LazyLoader) () -> {
+                System.out.println("Proxy JOURNAL ARTICLE: journal link");
                 ArticleJournal articleJournal = jdbcTemplate.query(
                         format("SELECT {0} FROM article_journal {2} " +
-                                        "JOIN articles {1} ON {1}.id = {2}.article_id WHERE {1}.id=?",
+                                        "JOIN articles {1} ON {1}.id = {2}.article_id " +
+                                        "WHERE {1}.id=?",
                                 fieldsStr(ArticleJournal.class), alias(Article.class), alias(ArticleJournal.class)),
-                        rs -> rs.next() ? EntityMapper.extractEntity(ArticleJournal.class, rs) : null,
+                        rs -> rs.next() ? EntityMappingUtils.extractEntity(ArticleJournal.class, rs) : null,
                         journalArt.getId());
                 if (articleJournal != null)
                     articleJournal.setArticle(journalArt);
@@ -104,11 +110,14 @@ public class FetchUtils {
         if (conferenceArt != null) {
             proxyArticle(conferenceArt, jdbcTemplate);
             conferenceArt.setConference((Conference) Enhancer.create(Conference.class, (LazyLoader) () -> {
+                System.out.println("Proxy CONFERENCE ARTICLE: conferences");
                 Conference conference = jdbcTemplate.query(
-                        format("SELECT {0} FROM conferences {1} " +
-                                        "JOIN article_conference {2} ON {1}.id = {2}.conference_id WHERE {2}.article_id=?",
+                        format("SELECT {0} " +
+                                        "FROM conferences {1} " +
+                                        "JOIN article_conference {2} ON {1}.id = {2}.conference_id " +
+                                        "WHERE {2}.article_id=?",
                                 fieldsStr(Conference.class), alias(Conference.class), alias("article_conference")),
-                        rs -> rs.next() ? EntityMapper.extractEntity(Conference.class, rs) : null,
+                        rs -> rs.next() ? EntityMappingUtils.extractEntity(Conference.class, rs) : null,
                         conferenceArt.getId());
                 proxyConference(conference, jdbcTemplate);
                 return conference;
@@ -119,22 +128,24 @@ public class FetchUtils {
     public static void proxyArticleJournal(ArticleJournal articleJournal, JdbcTemplate jdbcTemplate) {
         if (articleJournal != null) {
             if (articleJournal.getArticle() == null) {
-                articleJournal.setArticle((JournalArt) Enhancer.create(JournalArt.class, (LazyLoader) () ->
-                        jdbcTemplate.query("SELECT " + fieldsStr(Article.class) + " " +
-                                        "FROM articles a  " +
-                                        "JOIN article_journal aj ON a.id = aj.article_id " +
-                                        "WHERE a.id=?",
-                                rs -> rs.next() ? EntityMapper.extractEntity(JournalArt.class, rs) : null,
-                                articleJournal.getId().getArticleId())));
+                articleJournal.setArticle((JournalArt) Enhancer.create(JournalArt.class, (LazyLoader) () -> {
+                    System.out.println("Proxy ARTICLE_JOURNAL: article");
+                    return jdbcTemplate.query("SELECT " + fieldsStr(Article.class) + " " +
+                                    "FROM articles a  " +
+                                    "JOIN article_journal aj ON a.id = aj.article_id " +
+                                    "WHERE a.id=?",
+                            rs -> rs.next() ? EntityMappingUtils.extractEntity(JournalArt.class, rs) : null,
+                            articleJournal.getId().getArticleId());
+                }));
             }
             if (articleJournal.getJournal() == null) {
                 articleJournal.setJournal((Journal) Enhancer.create(Journal.class, (LazyLoader) () -> {
-                    System.out.println("Proxy articleJournal");
+                    System.out.println("Proxy ARTICLE_JOURNAL: journal");
                     Journal journal = jdbcTemplate.query("SELECT " + fieldsStr(Journal.class) + " " +
                                     "FROM journals j " +
                                     "JOIN article_journal aj ON j.id = aj.journal_id " +
                                     "WHERE aj.article_id=?",
-                            rs -> rs.next() ? EntityMapper.extractEntity(Journal.class, rs) : null,
+                            rs -> rs.next() ? EntityMappingUtils.extractEntity(Journal.class, rs) : null,
                             articleJournal.getArticle().getId());
                     proxyJournal(journal, jdbcTemplate);
                     return journal;
@@ -146,13 +157,12 @@ public class FetchUtils {
     public static void proxyAuthor(Author author, JdbcTemplate jdbcTemplate) {
         if (author != null) {
             author.setArticles((List) Enhancer.create(List.class, (LazyLoader) () -> {
-                System.out.println("Proxy author");
+                System.out.println("Proxy AUTHOR");
                 return jdbcTemplate.query("SELECT " + fieldsStr(Article.class) + " " +
-                                "FROM authors auth " +
-                                "JOIN article_author aa ON auth.id = aa.author_id " +
+                                "FROM article_author aa ON auth.id = aa.author_id " +
                                 "JOIN articles a ON a.id = aa.article_id " +
-                                "WHERE auth.id=?",
-                        (rs, rowNum) -> EntityMapper.extractEntity(Article.class, rs)
+                                "WHERE aa.author_id=?",
+                        (rs, rowNum) -> EntityMappingUtils.extractEntity(Article.class, rs)
                         , author.getId());
             }));
         }
@@ -161,14 +171,15 @@ public class FetchUtils {
     public static void proxyKeyword(Keyword keyword, JdbcTemplate jdbcTemplate) {
         if (keyword != null) {
             if (keyword.getArticles() == null) {
-                keyword.setArticles((List) Enhancer.create(List.class, (LazyLoader) () ->
-                        jdbcTemplate.query("SELECT " + fieldsStr(Article.class) + " " +
-                                        "FROM keywords k " +
-                                        "JOIN article_keyword ak ON k.id = ak.keyword_id " +
-                                        "JOIN articles a ON a.id = ak.article_id " +
-                                        "WHERE k.id=?",
-                                (rs, rowNum) -> EntityMapper.extractEntity(Article.class, rs),
-                                keyword.getId())));
+                keyword.setArticles((List) Enhancer.create(List.class, (LazyLoader) () -> {
+                    System.out.println("Proxy KEYWORD");
+                    return jdbcTemplate.query("SELECT " + fieldsStr(Article.class) + " " +
+                                    "FROM article_keyword ak ON k.id = ak.keyword_id " +
+                                    "JOIN articles a ON a.id = ak.article_id " +
+                                    "WHERE ak.keyword_id=?",
+                            (rs, rowNum) -> EntityMappingUtils.extractEntity(Article.class, rs),
+                            keyword.getId());
+                }));
             }
         }
     }
@@ -177,11 +188,12 @@ public class FetchUtils {
         if (journal != null) {
             if (journal.getArticleJournals() == null) {
                 journal.setArticleJournals((List) Enhancer.create(List.class, (LazyLoader) () -> {
+                    System.out.println("Proxy JOURNAL: articleJournals");
                     List<ArticleJournal> articleJournals = jdbcTemplate.query("SELECT " + fieldsStr(ArticleJournal.class) + " " +
                                     "FROM journals j " +
                                     "JOIN article_journal aj ON j.id = aj.journal_id " +
                                     "WHERE j.id=?",
-                            (rs, rowNum) -> EntityMapper.extractEntity(ArticleJournal.class, rs),
+                            (rs, rowNum) -> EntityMappingUtils.extractEntity(ArticleJournal.class, rs),
                             journal.getId());
                     if (articleJournals != null) {
                         articleJournals.forEach(aj -> {
@@ -198,14 +210,15 @@ public class FetchUtils {
     public static void proxyConference(Conference conference, JdbcTemplate jdbcTemplate) {
         if (conference != null) {
             if (conference.getArticles() == null) {
-                conference.setArticles((List) Enhancer.create(List.class, (LazyLoader) () ->
-                        jdbcTemplate.query("SELECT " + fieldsStr(Article.class) + " " +
-                                        "FROM conferences c " +
-                                        "JOIN article_conference ac ON c.id = ac.conference_id " +
-                                        "JOIN articles a ON a.id = ac.article_id " +
-                                        "WHERE c.id=?",
-                                (rs, rowNum) -> EntityMapper.extractEntity(ConferenceArt.class, rs),
-                                conference.getId())));
+                conference.setArticles((List) Enhancer.create(List.class, (LazyLoader) () -> {
+                    System.out.println("Proxy CONFERENCE: articles");
+                    return jdbcTemplate.query("SELECT " + fieldsStr(Article.class) + " " +
+                                    "FROM article_conference ac ON c.id = ac.conference_id " +
+                                    "JOIN articles a ON a.id = ac.article_id " +
+                                    "WHERE ac.conference_id=?",
+                            (rs, rowNum) -> EntityMappingUtils.extractEntity(ConferenceArt.class, rs),
+                            conference.getId());
+                }));
             }
         }
     }

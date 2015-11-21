@@ -5,8 +5,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.innopolis.dmd.project.dao.ArticleDao;
-import ru.innopolis.dmd.project.dao.util.EntityMapper;
-import ru.innopolis.dmd.project.model.*;
+import ru.innopolis.dmd.project.dao.util.EntityMappingUtils;
+import ru.innopolis.dmd.project.model.Author;
+import ru.innopolis.dmd.project.model.Conference;
+import ru.innopolis.dmd.project.model.Journal;
 import ru.innopolis.dmd.project.model.article.Article;
 import ru.innopolis.dmd.project.model.article.ConferenceArt;
 import ru.innopolis.dmd.project.model.article.JournalArt;
@@ -14,15 +16,9 @@ import ru.innopolis.dmd.project.model.enums.ArticleType;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.text.MessageFormat.format;
-import static ru.innopolis.dmd.project.dao.util.EntityMapper.extractEntity;
-import static ru.innopolis.dmd.project.dao.util.SQLUtils.alias;
-import static ru.innopolis.dmd.project.dao.util.SQLUtils.fieldsStr;
 
 /**
  * Created by timur on 15.10.15.
@@ -40,38 +36,38 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
 
     public static void main(String[] args) {
         ArticleDao articleDao = new ArticleDaoImpl(testDataSource);
-        List<JournalArt> allJournalArticles = articleDao.findAllJournalArticles();
-        System.out.println("journal articles: " + allJournalArticles);
-
-        List<ConferenceArt> allConferenceArticles = articleDao.findAllConferenceArticles();
-        System.out.println("conference articles: " + allConferenceArticles);
-
-        List<Article> all = articleDao.findAll();
-        System.out.println("all articles: " + all);
-
-        for (Article article : all) {
-            System.out.println("==================================");
-            System.out.println(article.getTitle());
-            if (article instanceof JournalArt) {
-                ArticleJournal journalLink = ((JournalArt) article).getJournalLink();
-                System.out.println(journalLink.getNumber());
-                System.out.println(journalLink.getVolume());
-                System.out.println(journalLink.getJournal().getName());
-            }
-            if (article instanceof ConferenceArt) {
-                ConferenceArt conferenceArt = (ConferenceArt) article;
-                System.out.println(conferenceArt.getConference().getName());
-            }
-            List<Keyword> keywords = article.getKeywords();
-            System.out.println("KEYWORDS:");
-            keywords.forEach(keyword -> System.out.println(keyword.getWord()));
-            List<Author> authors = article.getAuthors();
-            System.out.println("AUTHORS:");
-            authors.forEach(author -> {
-                System.out.println("  " + author.getFirstName() + " " + author.getLastName());
-            });
-            System.out.println("==================================");
-        }
+//        List<JournalArt> allJournalArticles = articleDao.findAllJournalArticles();
+//        System.out.println("journal articles: " + allJournalArticles);
+//
+//        List<ConferenceArt> allConferenceArticles = articleDao.findAllConferenceArticles();
+//        System.out.println("conference articles: " + allConferenceArticles);
+//
+//        List<Article> all = articleDao.findAll();
+//        System.out.println("all articles: " + all);
+//
+//        for (Article article : all) {
+//            System.out.println("==================================");
+//            System.out.println(article.getTitle());
+//            if (article instanceof JournalArt) {
+//                ArticleJournal journalLink = ((JournalArt) article).getJournalLink();
+//                System.out.println(journalLink.getNumber());
+//                System.out.println(journalLink.getVolume());
+//                System.out.println(journalLink.getJournal().getName());
+//            }
+//            if (article instanceof ConferenceArt) {
+//                ConferenceArt conferenceArt = (ConferenceArt) article;
+//                System.out.println(conferenceArt.getConference().getName());
+//            }
+//            List<Keyword> keywords = article.getKeywords();
+//            System.out.println("KEYWORDS:");
+//            keywords.forEach(keyword -> System.out.println(keyword.getWord()));
+//            List<Author> authors = article.getAuthors();
+//            System.out.println("AUTHORS:");
+//            authors.forEach(author -> {
+//                System.out.println("  " + author.getFirstName() + " " + author.getLastName());
+//            });
+//            System.out.println("==================================");
+//        }
 
 
         List<Article> bySomeFieldLike = articleDao.findBySomeFieldLike("title");
@@ -84,38 +80,6 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
 //        List<Article> sortBy = articleDao.findAllAndSortBy("year", true);
 //        System.out.println("Sorted by year:" + sortBy
 //                .stream().map(a -> a.getTitle() + " " + a.getYear()).collect(Collectors.toList()));
-    }
-
-    @Override
-    public List<JournalArt> findAllJournalArticles() {
-        String sql = format("SELECT {0}, {1}, {2} " +
-                        "FROM articles {3} " +
-                        "JOIN article_journal {4} ON {3}.id = {4}.article_id " +
-                        "JOIN journals {5} ON  {4}.journal_id = {5}.id",
-                tableFieldsStr,
-                fieldsStr(ArticleJournal.class),
-                fieldsStr(Journal.class),
-                alias, alias("article_journal"), alias("journals"));
-        return proxy(jdbcTemplate.query(sql, (rs, rowNum) -> extractEntity(JournalArt.class, rs)));
-    }
-
-    @Override
-    public List<ConferenceArt> findAllConferenceArticles() {
-        return proxy(jdbcTemplate.query(
-                "SELECT " + tableFieldsStr + ", " +
-                        fieldsStr(Conference.class) + " " +
-                        "FROM articles a " +
-                        "JOIN article_conference ac ON a.id = ac.article_id " +
-                        "JOIN conferences c ON c.id = ac.conference_id;"
-                , (rs, rowNum) -> extractEntity(ConferenceArt.class, rs)));
-    }
-
-    @Override
-    public List<Article> findAll() {
-        List<Article> articles = new LinkedList<>();
-        articles.addAll(findAllJournalArticles());
-        articles.addAll(findAllConferenceArticles());
-        return articles;
     }
 
     @Override
@@ -133,9 +97,9 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
                 .map(s -> "'" + s.replace("'", "''") + "'").collect(Collectors.joining());
         if (shouldIncludeAll)
             sql = "SELECT DISTINCT " + tableFieldsStr + " " +
-                    "FROM articles a, article_keyword ak " +
-                    "WHERE a.id = ak.article_id " +
-                    "AND ak.article_id IN (SELECT ak.article_id AS id " +
+                    "FROM articles a JOIN article_keyword ak " +
+                    "ON a.id = ak.article_id " +
+                    "WHERE ak.article_id IN (SELECT ak.article_id AS id " +
                     /*                   */"FROM article_keyword ak " +
                     /*                   */"WHERE ak.keyword_id IN (SELECT k.id " +
                     /*                                           */"FROM keywords k " +
@@ -155,18 +119,19 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
 
     @Override
     public List<Article> findByKeyword(String keyword) {
-        return proxy(jdbcTemplate.query("SELECT " + tableFieldsStr + " FROM articles a " +
-                "JOIN article_keyword ak ON a.id = ak.article_id " +
-                "JOIN keywords k ON ak.keyword_id = k.id " +
+        return proxy(jdbcTemplate.query("SELECT " + tableFieldsStr + " " +
+                "FROM keywords k " +
+                "JOIN article_keyword ak ON k.id = ak.keyword_id " +
+                "JOIN articles a ON ak.article_id = a.id " +
                 "WHERE k.word=?", rowMapper(), keyword));
     }
 
     @Override
     public List<Article> findByAuthor(Author author) {
         String sql = "SELECT " + tableFieldsStr + " " +
-                "FROM articles a " +
-                "JOIN article_author aa ON a.id = aa.article_id " +
-                "JOIN authors auth ON auth.id = aa.author_id " +
+                "FROM authors auth " +
+                "JOIN article_author aa ON auth.id = aa.author_id " +
+                "JOIN articles a ON aa.article_id = a.id " +
                 "WHERE auth.id=?;";
         return proxy(jdbcTemplate.query(sql, rowMapper(), author.getId()));
     }
@@ -178,7 +143,7 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
                         "JOIN article_journal aj ON j.id = aj.journal_id " +
                         "JOIN articles a ON a.id = aj.article_id " +
                         "WHERE j.id=?",
-                (rs, rowNum) -> EntityMapper.extractEntity(JournalArt.class, rs),
+                (rs, rowNum) -> EntityMappingUtils.extractEntity(JournalArt.class, rs),
                 journal.getId()));
     }
 
@@ -189,7 +154,7 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
                         "JOIN article_conference ac ON c.id = ac.conference_id " +
                         "JOIN articles a ON ac.article_id = a.id " +
                         "WHERE c.id=?",
-                (rs, rowNum) -> EntityMapper.extractEntity(ConferenceArt.class, rs),
+                (rs, rowNum) -> EntityMappingUtils.extractEntity(ConferenceArt.class, rs),
                 conference.getId()));
     }
 
@@ -197,8 +162,7 @@ public class ArticleDaoImpl extends AbstractDaoImpl<Article, Long> implements Ar
     public Long save(Article entity) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
-            PreparedStatement ps
-                    = con.prepareStatement(INSERT_SQL, new String[]{"id"});
+            PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[]{"id"});
             ps.setString(1, entity.getTitle());
             ArticleType publtype = entity.getPubltype();
             ps.setString(2, publtype != null ? publtype.getName() : null);

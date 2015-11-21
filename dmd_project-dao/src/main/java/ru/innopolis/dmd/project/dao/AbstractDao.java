@@ -10,11 +10,7 @@ import java.util.List;
  */
 public interface AbstractDao<E extends IdentifiedEntity, I extends Serializable> {
 
-    List<E> findBy(String field, Object value);
-
     List<E> findBy(String field, Object value, Integer limit, Integer offset);
-
-    List<E> findLike(String field, Object similarValue, Integer limit, Integer offset);
 
     E findById(I id);
 
@@ -36,17 +32,15 @@ public interface AbstractDao<E extends IdentifiedEntity, I extends Serializable>
      */
     void delete(I id);
 
-    List<E> findAll();
-
     /**
      * Find all rows and sort them
      *
      * @param columnName ORDER BY columnName
      * @param isAsc      true -> ASC, false -> DESC
+     * @param limit
+     * @param offset
      * @return rows sorted by columnName
      */
-    List<E> findAllAndSortBy(String columnName, boolean isAsc);
-
     List<E> findAllAndSortBy(String columnName, boolean isAsc, Integer offset, Integer limit);
 
     List<E> findBySomeFieldLike(String value);
