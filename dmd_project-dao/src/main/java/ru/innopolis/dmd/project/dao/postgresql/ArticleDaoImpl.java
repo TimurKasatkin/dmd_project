@@ -5,7 +5,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.innopolis.dmd.project.dao.ArticleDao;
-import ru.innopolis.dmd.project.dao.util.EntityMappingUtils;
+import ru.innopolis.dmd.project.dao.postgresql.utils.EntityMappingUtils;
 import ru.innopolis.dmd.project.model.Author;
 import ru.innopolis.dmd.project.model.Conference;
 import ru.innopolis.dmd.project.model.Journal;

@@ -6,10 +6,6 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -35,22 +31,11 @@ public class DBLPParser {
     private ArticleService articleDao;
     private int count = 0;
 
-    private DBLPParser(String dblpXmlPath, String dbUrl, String dbUserName, String dbPassword) {
-        File file = new File(dblpXmlPath);
-        if (!file.exists()) throw new IllegalArgumentException("invalid dblp xml path");
-        this.dblpXmlPath = dblpXmlPath;
-        this.articleDao = new DBLoadArticleService(dbUrl, dbUserName, dbPassword);
-    }
-
     public DBLPParser(String dblpXmlPath) {
         File file = new File(dblpXmlPath);
         if (!file.exists()) throw new IllegalArgumentException("invalid dblp xml path");
         this.dblpXmlPath = dblpXmlPath;
         this.articleDao = new SQLFileLoadArticleService();
-    }
-
-    public static void parse(String dblpXmlPath, String dbUrl, String dbUserName, String dbPassword) {
-        new DBLPParser(dblpXmlPath, dbUrl, dbUserName, dbPassword).parse();
     }
 
     public static void parse(String dblpXmlPath) {
@@ -452,76 +437,4 @@ public class DBLPParser {
 
     }
 
-    //TODO if we want to load to db directly
-    private static class DBLoadArticleService extends InMemoryArticleService {
-        final static String AUTHOR_SQL = "INSERT INTO authors(first_name, last_name) VALUES (?,?)";
-        final static String JOURNAL_SQL = "INSERT INTO journals(name) VALUES (?)";
-        final static String ARTICLE_SQL = "INSERT INTO " +
-                "articles(title, publtype, url, year) " +
-                "VALUES (?,?,?,?)";
-        final static String ARTICLE_AUTHOR_SQL = "INSERT INTO article_author(article_id, author_id) " +
-                "VALUES (" +
-                "(SELECT id FROM articles WHERE title=? AND year=?)," +
-                "(SELECT id FROM authors WHERE first_name=? AND last_name=?))";
-
-
-        private PreparedStatement areaStm;
-        private PreparedStatement journalStm;
-        private PreparedStatement authorStm;
-        private PreparedStatement articleStm;
-        private PreparedStatement articleAreaStm;
-        private PreparedStatement articleAuthorStm;
-        private Connection connection;
-
-        private String dbUrl;
-        private String dbUserName;
-        private String dbPassword;
-
-        public DBLoadArticleService(String dbUrl, String dbUserName, String dbPassword) {
-            super();
-            this.dbUrl = dbUrl;
-            this.dbUserName = dbUserName;
-            this.dbPassword = dbPassword;
-        }
-
-        private void initConnection() throws SQLException {
-            if (connection == null) {
-                connection = DriverManager.getConnection(dbUrl, dbUserName, dbPassword);
-                journalStm = connection.prepareStatement(JOURNAL_SQL);
-                authorStm = connection.prepareStatement(AUTHOR_SQL);
-                articleStm = connection.prepareStatement(ARTICLE_SQL);
-                articleAuthorStm = connection.prepareStatement(ARTICLE_AUTHOR_SQL);
-            }
-        }
-
-//        private void initArticleStm(Article article) throws SQLException {
-//            articleStm.setString(1, article.title);
-//            articleStm.setString(2, article.publtype);
-//            articleStm.setString(3, article.url);
-//            articleStm.setString(4, article.journal);
-//            articleStm.setInt(5, article.year);
-//            articleStm.setString(6, article.volume);
-//            articleStm.setString(7, article.number);
-//        }
-
-        @Override
-        public void loadAll() {
-            try {
-
-            } finally {
-                closeConnection();
-            }
-        }
-
-        private void closeConnection() {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
 }

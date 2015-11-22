@@ -34,6 +34,12 @@
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>ru.innopolis</groupId>
+            <artifactId>innodb</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

@@ -3,7 +3,9 @@ package ru.innopolis.dmd.project.dao;
 import ru.innopolis.dmd.project.model.Author;
 
 /**
- * Created by timur on 15.10.15.
+ * @author Timur Kasatkin
+ * @date 15.10.15.
+ * @email aronwest001@gmail.com
  */
 public interface AuthorDao extends AbstractDao<Author, Long> {
 
