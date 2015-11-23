@@ -1,4 +1,4 @@
-package ru.innopolis.dmd.project.dao.util;
+package ru.innopolis.dmd.project.dao.postgresql.utils;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

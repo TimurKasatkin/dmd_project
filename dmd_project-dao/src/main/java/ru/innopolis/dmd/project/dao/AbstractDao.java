@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface AbstractDao<E extends IdentifiedEntity, I extends Serializable> {
 
-    List<E> findBy(String field, Object value, Integer limit, Integer offset);
-
     E findById(I id);
 
     I save(E entity);

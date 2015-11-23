@@ -6,9 +6,9 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import ru.innopolis.dmd.project.dao.AbstractDao;
+import ru.innopolis.dmd.project.dao.postgresql.utils.EntityMappingUtils;
+import ru.innopolis.dmd.project.dao.postgresql.utils.FetchUtils;
 import ru.innopolis.dmd.project.dao.util.Constants;
-import ru.innopolis.dmd.project.dao.util.EntityMappingUtils;
-import ru.innopolis.dmd.project.dao.util.FetchUtils;
 import ru.innopolis.dmd.project.model.IdentifiedEntity;
 
 import javax.sql.DataSource;
@@ -16,9 +16,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import static java.text.MessageFormat.format;
-import static ru.innopolis.dmd.project.dao.util.EntityMappingUtils.extractEntity;
-import static ru.innopolis.dmd.project.dao.util.SQLUtils.alias;
-import static ru.innopolis.dmd.project.dao.util.SQLUtils.fieldsStr;
+import static ru.innopolis.dmd.project.dao.postgresql.utils.SQLUtils.alias;
+import static ru.innopolis.dmd.project.dao.postgresql.utils.SQLUtils.fieldsStr;
 
 /**
  * Created by timur on 15.10.15.
@@ -55,13 +54,6 @@ public abstract class AbstractDaoImpl<E extends IdentifiedEntity, I extends Seri
         this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource, true);
         this.tableFieldsStr = fieldsStr(entityClass);
-    }
-
-    @Override
-    public List<E> findBy(String field, Object value, Integer limit, Integer offset) {
-        return proxy(jdbcTemplate.query(format("SELECT {0} FROM {1} {2} WHERE {3}=? LIMIT {4} OFFSET {5};",
-                tableFieldsStr, tableName, alias, field, limit.toString(), offset.toString()),
-                (rs, rowNum) -> extractEntity(entityClass, rs), value));
     }
 
     @Override

@@ -30,7 +30,7 @@ public class UsersController {
     private PasswordEncoder encoder;
 
 //  "password" == "$2a$10$a8.KLt0hE4rwxBsV0L.z0.65qebt7uzPcnY9hTr11QyOybs8oSS6C"
-
+// "password" == "4b49ae654ce43197fe974cd1bee4859c08dba84647c917a9f489bf38ffd4d5e48fc697ca84db438b"
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.addValidators(new UserRegistrationValidator());

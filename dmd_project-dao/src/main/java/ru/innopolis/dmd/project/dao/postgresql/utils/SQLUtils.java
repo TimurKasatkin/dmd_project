@@ -1,4 +1,4 @@
-package ru.innopolis.dmd.project.dao.util;
+package ru.innopolis.dmd.project.dao.postgresql.utils;
 
 import ru.innopolis.dmd.project.model.IdentifiedEntity;
 

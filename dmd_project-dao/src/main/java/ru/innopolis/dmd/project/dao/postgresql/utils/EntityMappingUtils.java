@@ -1,4 +1,4 @@
-package ru.innopolis.dmd.project.dao.util;
+package ru.innopolis.dmd.project.dao.postgresql.utils;
 
 import ru.innopolis.dmd.project.model.*;
 import ru.innopolis.dmd.project.model.article.Article;
@@ -11,9 +11,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
-
-import static ru.innopolis.dmd.project.dao.util.ResultSetUtils.contains;
-import static ru.innopolis.dmd.project.dao.util.ResultSetUtils.extractIfContains;
 
 /**
  * @author Timur Kasatkin
@@ -42,10 +39,10 @@ public class EntityMappingUtils {
 
     private static ArticleJournal extractArticleJournal(ResultSet rs) {
         try {
-            return new ArticleJournal(extractIfContains(Long.class, "articlejournal_article_id", rs),
-                    extractIfContains(Long.class, "articlejournal_journal_id", rs),
-                    extractIfContains(String.class, "articlejournal_volume", rs),
-                    extractIfContains(String.class, "articlejournal_number", rs));
+            return new ArticleJournal(ResultSetUtils.extractIfContains(Long.class, "articlejournal_article_id", rs),
+                    ResultSetUtils.extractIfContains(Long.class, "articlejournal_journal_id", rs),
+                    ResultSetUtils.extractIfContains(String.class, "articlejournal_volume", rs),
+                    ResultSetUtils.extractIfContains(String.class, "articlejournal_number", rs));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,7 +51,7 @@ public class EntityMappingUtils {
 
     private static Article extractArticle(ResultSet rs) {
         try {
-            if (contains(rs, "article_publtype")) {
+            if (ResultSetUtils.contains(rs, "article_publtype")) {
                 ArticleType publtype = ArticleType
                         .byName(rs.getString("article_publtype"));
                 Article article = null;
@@ -65,8 +62,8 @@ public class EntityMappingUtils {
                         Journal journal = extractJournal(rs);
                         ArticleJournal journalLink = new ArticleJournal(journalArt,
                                 journal,
-                                extractIfContains(String.class, "articlejournal_volume", rs),
-                                extractIfContains(String.class, "articlejournal_number", rs));
+                                ResultSetUtils.extractIfContains(String.class, "articlejournal_volume", rs),
+                                ResultSetUtils.extractIfContains(String.class, "articlejournal_number", rs));
                         if (journal != null) {
                             journal.setArticleJournals(new LinkedList<>());
                             journal.getArticleJournals().add(journalLink);
@@ -79,10 +76,10 @@ public class EntityMappingUtils {
                         conferenceArt.setConference(extractConference(rs));
                         break;
                 }
-                article.setId(extractIfContains(Long.class, "article_id", rs));
-                article.setTitle(extractIfContains(String.class, "article_title", rs));
-                article.setUrl(extractIfContains(String.class, "article_url", rs));
-                article.setYear(extractIfContains(Integer.class, "article_year", rs));
+                article.setId(ResultSetUtils.extractIfContains(Long.class, "article_id", rs));
+                article.setTitle(ResultSetUtils.extractIfContains(String.class, "article_title", rs));
+                article.setUrl(ResultSetUtils.extractIfContains(String.class, "article_url", rs));
+                article.setYear(ResultSetUtils.extractIfContains(Integer.class, "article_year", rs));
                 return article;
             }
         } catch (SQLException e) {
@@ -93,9 +90,9 @@ public class EntityMappingUtils {
 
     private static Author extractAuthor(ResultSet rs) {
         try {
-            return new Author(extractIfContains(Long.class, "author_id", rs),
-                    extractIfContains(String.class, "author_first_name", rs),
-                    extractIfContains(String.class, "author_last_name", rs));
+            return new Author(ResultSetUtils.extractIfContains(Long.class, "author_id", rs),
+                    ResultSetUtils.extractIfContains(String.class, "author_first_name", rs),
+                    ResultSetUtils.extractIfContains(String.class, "author_last_name", rs));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,8 +101,8 @@ public class EntityMappingUtils {
 
     private static Conference extractConference(ResultSet rs) {
         try {
-            return new Conference(extractIfContains(Long.class, "conference_id", rs),
-                    extractIfContains(String.class, "conference_name", rs));
+            return new Conference(ResultSetUtils.extractIfContains(Long.class, "conference_id", rs),
+                    ResultSetUtils.extractIfContains(String.class, "conference_name", rs));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -114,8 +111,8 @@ public class EntityMappingUtils {
 
     private static Journal extractJournal(ResultSet rs) {
         try {
-            return new Journal(extractIfContains(Long.class, "journal_id", rs),
-                    extractIfContains(String.class, "journal_name", rs));
+            return new Journal(ResultSetUtils.extractIfContains(Long.class, "journal_id", rs),
+                    ResultSetUtils.extractIfContains(String.class, "journal_name", rs));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -124,8 +121,8 @@ public class EntityMappingUtils {
 
     private static Keyword extractKeyword(ResultSet rs) {
         try {
-            return new Keyword(extractIfContains(Long.class, "keyword_id", rs),
-                    extractIfContains(String.class, "keyword_word", rs));
+            return new Keyword(ResultSetUtils.extractIfContains(Long.class, "keyword_id", rs),
+                    ResultSetUtils.extractIfContains(String.class, "keyword_word", rs));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -134,11 +131,11 @@ public class EntityMappingUtils {
 
     private static User extractUser(ResultSet rs) {
         try {
-            String roleName = extractIfContains(String.class, "user_role", rs);
-            return new User(extractIfContains(Long.class, "user_id", rs),
-                    extractIfContains(String.class, "user_login", rs),
-                    extractIfContains(String.class, "user_password", rs),
-                    extractIfContains(String.class, "user_email", rs),
+            String roleName = ResultSetUtils.extractIfContains(String.class, "user_role", rs);
+            return new User(ResultSetUtils.extractIfContains(Long.class, "user_id", rs),
+                    ResultSetUtils.extractIfContains(String.class, "user_login", rs),
+                    ResultSetUtils.extractIfContains(String.class, "user_password", rs),
+                    ResultSetUtils.extractIfContains(String.class, "user_email", rs),
                     roleName != null ? UserRole.valueOf(roleName) : null);
         } catch (SQLException e) {
             e.printStackTrace();
